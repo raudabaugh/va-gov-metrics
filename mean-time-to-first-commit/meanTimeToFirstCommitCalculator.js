@@ -18,28 +18,23 @@ export class MeanTimeToFirstCommitCalculator {
         const onboardingIssues = await this.onboardingTemplateIssueFinder.getAllOnboardingTemplateIssues();
         for (const onboardingIssue of onboardingIssues) {
             const ghHandle = this.githubHandleExtractor.extractGitHubHandle(onboardingIssue);
+            const onboardingStart = onboardingIssue.created_at;
 
-            const firstCommitFinder = new FirstCommitFinder(this.octokit, ghHandle);
+            const firstCommitFinder = new FirstCommitFinder(this.octokit, ghHandle, onboardingStart);
             const firstCommitToVetsWebsite = await firstCommitFinder.findFirstCommitTo('vets-website');
             const firstCommitToVetsApi = await firstCommitFinder.findFirstCommitTo('vets-api');
             const firstCommitDateTime = firstCommitFinder.calculateFirstCommitDateTime(firstCommitToVetsWebsite, firstCommitToVetsApi);
 
             if(!firstCommitDateTime) {
-                console.log("%s did not make a commit yet", ghHandle);
                 continue;
             }
 
             this.results.push({
                 "githubHandle": ghHandle,
-                "onboardingStart": onboardingIssue.created_at,
+                "onboardingStart": onboardingStart,
                 "firstCommitDateTime": firstCommitDateTime
             });
         }
-
-        // console.log("\nGitHub User, Onboarding Start, First Commit, Time to First Commit");
-        // for (const result of results) {
-        //     console.log("%s, %s, %s, %s", result.githubHandle, result.onboardingStart, result.firstCommitDateTime, (new Date(result.firstCommitDateTime) - new Date(result.onboardingStart)) / 1000 / 60 / 60 / 24);
-        // }
 
         return this.results.map((result => {
                 return (new Date(result.firstCommitDateTime) - new Date(result.onboardingStart)) / 1000 / 60 / 60 / 24
@@ -47,6 +42,5 @@ export class MeanTimeToFirstCommitCalculator {
             .reduce((sum, measurement) => {
                 return sum + measurement;
             }, 0) / this.results.length;
-
     }
 }
