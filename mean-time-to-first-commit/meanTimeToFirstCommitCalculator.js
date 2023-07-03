@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import { OnboardingTemplateFinder } from "./onboardingTemplateFinder.js";
+import { OnboardingTemplateIssueFinder } from "./onboardingTemplateIssueFinder.js";
 import { GithubHandleExtractor } from "./githubHandleExtractor.js";
 import { FirstCommitFinder } from "./firstCommitFinder.js";
 
@@ -9,13 +9,13 @@ export class MeanTimeToFirstCommitCalculator {
         this.octokit = new Octokit({
             auth: process.env.GH_ACCESS_TOKEN
         });
-        this.onboardingTemplateFinder = new OnboardingTemplateFinder(this.octokit);
+        this.onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder(this.octokit);
         this.githubHandleExtractor = new GithubHandleExtractor();
         this.results = [];
     }
 
     async calculate() {
-        const onboardingIssues = await this.onboardingTemplateFinder.getAllOnboardingTemplateIssues();
+        const onboardingIssues = await this.onboardingTemplateIssueFinder.getAllOnboardingTemplateIssues();
         for (const onboardingIssue of onboardingIssues) {
             const ghHandle = this.githubHandleExtractor.extractGitHubHandle(onboardingIssue);
 
