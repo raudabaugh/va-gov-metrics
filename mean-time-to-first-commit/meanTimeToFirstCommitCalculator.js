@@ -12,7 +12,9 @@ export class MeanTimeToFirstCommitCalculator {
     }
 
     async calculate() {
+        let nonCommitters = 0;
         const onboardingIssues = await this.onboardingTemplateIssueFinder.getAllOnboardingTemplateIssues();
+
         for (const onboardingIssue of onboardingIssues) {
             const ghHandle = this.githubHandleExtractor.extractGitHubHandle(onboardingIssue);
             const onboardingStart = onboardingIssue.created_at;
@@ -23,6 +25,7 @@ export class MeanTimeToFirstCommitCalculator {
             const firstCommitDateTime = firstCommitFinder.calculateFirstCommitDateTime(firstCommitToVetsWebsite, firstCommitToVetsApi);
 
             if(!firstCommitDateTime) {
+                nonCommitters++;
                 continue;
             }
 
@@ -32,6 +35,10 @@ export class MeanTimeToFirstCommitCalculator {
                 "firstCommitDateTime": firstCommitDateTime
             });
         }
+
+        console.log("Total Onboarders: %d", onboardingIssues.length);
+        console.log("Total Committers: %d", onboardingIssues.length - nonCommitters);
+        console.log("Percent of Onboarders Committing: %d%%", ((onboardingIssues.length - nonCommitters) / onboardingIssues.length).toFixed(2) * 100);
 
         return this.results.map((result => {
                 return (new Date(result.firstCommitDateTime) - new Date(result.onboardingStart)) / 1000 / 60 / 60 / 24
