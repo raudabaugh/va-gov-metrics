@@ -7,13 +7,13 @@ export class GithubHandleExtractor {
 
         const ghHandleBeginIndex = body.search(ghHandleBeginRegex);
         if(ghHandleBeginIndex === -1) {
-            console.log('Could not find GitHub handle for issue %d', issue.number);
+            // console.log('Could not find GitHub handle for issue %d', issue.number);
             return issue.user.login;
         }
 
         const ghHandleEndIndex = body.substring(ghHandleBeginIndex).search(ghHandleEndRegex);
         if(ghHandleBeginIndex === -1) {
-            console.log('Could not find GitHub handle for issue %d', issue.number);
+            // console.log('Could not find GitHub handle for issue %d', issue.number);
             return issue.user.login;
         }
 
@@ -21,7 +21,7 @@ export class GithubHandleExtractor {
             let ghHandle = body.substring(ghHandleBeginIndex).substring(0, ghHandleEndIndex).split(':')[1].trim();
 
             if(!ghHandle) {
-                console.log('Could not find GitHub handle for issue %d', issue.number);
+                // console.log('Could not find GitHub handle for issue %d', issue.number);
                 return issue.user.login;
             }
             // GitHub handle is a link like '[my-github-handle](https'
@@ -31,7 +31,7 @@ export class GithubHandleExtractor {
 
             return ghHandle;
         } catch(e) {
-            console.log('Could not parse GitHub handle for issue %d', issue.number);
+            // console.log('Could not parse GitHub handle for issue %d', issue.number);
             return issue.user.login;
         }
     }
