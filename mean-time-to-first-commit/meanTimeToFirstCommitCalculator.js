@@ -1,14 +1,11 @@
-import { Octokit } from "octokit";
 import { OnboardingTemplateIssueFinder } from "./onboardingTemplateIssueFinder.js";
 import { GithubHandleExtractor } from "./githubHandleExtractor.js";
 import { FirstCommitFinder } from "./firstCommitFinder.js";
 
 export class MeanTimeToFirstCommitCalculator {
 
-    constructor() {
-        this.octokit = new Octokit({
-            auth: process.env.GH_ACCESS_TOKEN
-        });
+    constructor(octokit) {
+        this.octokit = octokit;
         this.onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder(this.octokit);
         this.githubHandleExtractor = new GithubHandleExtractor();
         this.results = [];
