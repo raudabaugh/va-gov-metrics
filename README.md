@@ -13,6 +13,6 @@ Then:
     npm run prod
 
     Total Onboarders: 118
-    Total Committers: 18
-    Percent of Onboarders Committing: 15%
-    Mean Time to First Commit: 34.45 days
+    Total Committers: 19
+    Percent of Onboarders Committing: 16%
+    Mean Time to First Commit: 32.96 days

@@ -19,17 +19,6 @@ export class FirstCommitFinder {
             })
             .pop();
 
-        return firstCommit;
-    }
-
-    calculateFirstCommitDateTime(date1, date2) {
-        if(date1 && date2)
-            return new Date(date1) < new Date(date2) ? date1 : date2;
-
-        if(date1)
-            return date1;
-
-        if(date2)
-            return date2;
+        return new Date(firstCommit);
     }
 }

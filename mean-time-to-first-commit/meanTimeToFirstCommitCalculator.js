@@ -13,18 +13,18 @@ export class MeanTimeToFirstCommitCalculator {
 
     async calculate() {
         let nonCommitters = 0;
-        const onboardingIssues = await this.onboardingTemplateIssueFinder.getAllOnboardingTemplateIssues();
+        const onboardingTemplateIssues = await this.onboardingTemplateIssueFinder.findAll();
 
-        for (const onboardingIssue of onboardingIssues) {
-            const ghHandle = this.githubHandleExtractor.extractGitHubHandle(onboardingIssue);
-            const onboardingStart = onboardingIssue.created_at;
+        for (const onboardingTemplateIssue of onboardingTemplateIssues) {
+            const ghHandle = this.githubHandleExtractor.extractFrom(onboardingTemplateIssue);
+            const onboardingStart = onboardingTemplateIssue.created_at;
 
             const firstCommitFinder = new FirstCommitFinder(this.octokit, ghHandle, onboardingStart);
             const firstCommitToVetsWebsite = await firstCommitFinder.findFirstCommitTo('vets-website');
             const firstCommitToVetsApi = await firstCommitFinder.findFirstCommitTo('vets-api');
-            const firstCommitDateTime = firstCommitFinder.calculateFirstCommitDateTime(firstCommitToVetsWebsite, firstCommitToVetsApi);
+            const firstCommitDateTime = this.#calculateFirstCommitDateTime(firstCommitToVetsWebsite, firstCommitToVetsApi);
 
-            if(!firstCommitDateTime) {
+            if(isNaN(firstCommitDateTime)) {
                 nonCommitters++;
                 continue;
             }
@@ -36,15 +36,27 @@ export class MeanTimeToFirstCommitCalculator {
             });
         }
 
-        console.log("Total Onboarders: %d", onboardingIssues.length);
-        console.log("Total Committers: %d", onboardingIssues.length - nonCommitters);
-        console.log("Percent of Onboarders Committing: %d%%", ((onboardingIssues.length - nonCommitters) / onboardingIssues.length).toFixed(2) * 100);
+        console.log("Total Onboarders: %d", onboardingTemplateIssues.length);
+        console.log("Total Committers: %d", onboardingTemplateIssues.length - nonCommitters);
+        console.log("Percent of Onboarders Committing: %d%%", ((onboardingTemplateIssues.length - nonCommitters) / onboardingTemplateIssues.length).toFixed(2) * 100);
 
-        return this.results.map((result => {
-                return (new Date(result.firstCommitDateTime) - new Date(result.onboardingStart)) / 1000 / 60 / 60 / 24
+        const meanTimeToFirstCommit =
+            this.results.map((result => {
+                const timeToFirstCommit = new Date(result.firstCommitDateTime) - new Date(result.onboardingStart);
+                return timeToFirstCommit / 1000 / 60 / 60 / 24;
             }))
             .reduce((sum, measurement) => {
                 return sum + measurement;
             }, 0) / this.results.length;
+
+        return meanTimeToFirstCommit.toFixed(2);
+    }
+
+    #calculateFirstCommitDateTime(...dates) {
+        dates = dates.filter(date => {
+            return !isNaN(date.valueOf());
+        });
+
+        return new Date(Math.min(...dates));
     }
 }

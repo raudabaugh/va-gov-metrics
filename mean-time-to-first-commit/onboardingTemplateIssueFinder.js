@@ -4,7 +4,7 @@ export class OnboardingTemplateIssueFinder {
         this.octokit = octokit;
     }
 
-    async getAllOnboardingTemplateIssues() {
+    async findAll() {
         const onboardingTemplateIssues =
             (await this.octokit.paginate(this.octokit.rest.issues.listForRepo, {
                 owner: 'department-of-veterans-affairs',

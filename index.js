@@ -8,4 +8,4 @@ const octokit = new Octokit({
 const meanTimeToFirstCommitCalculator = new MeanTimeToFirstCommitCalculator(octokit);
 const meanTimeToFirstCommit = await meanTimeToFirstCommitCalculator.calculate();
 
-console.log("Mean Time to First Commit: %d days", meanTimeToFirstCommit.toFixed(2));
+console.log("Mean Time to First Commit: %d days", meanTimeToFirstCommit);
