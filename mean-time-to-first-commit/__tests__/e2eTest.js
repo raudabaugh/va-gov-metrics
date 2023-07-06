@@ -1,6 +1,7 @@
 const main = require("../../index");
 const { rest } = require("msw");
 const { setupServer } = require("msw/node");
+const { createOnboardingTemplateIssue, createCommit } = require("./factories");
 
 const server = setupServer();
 
@@ -9,35 +10,34 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe("happy path", () => {
-
   beforeEach(() => {
     const host = "https://api.github.com";
     server.use(
       rest.get(
         `${host}/repos/department-of-veterans-affairs/va.gov-team/issues`,
-        (req, res, ctx) => res(
-          ctx.json([
-            {
-              title: "Platform Orientation Template",
-              body: "GitHub handle*: octocat\n",
-              created_at: "2023-07-01T00:00:00Z",
-            },
-          ])
-        )
+        (req, res, ctx) =>
+          res(
+            ctx.json([
+              createOnboardingTemplateIssue({
+                created_at: "2023-07-01T00:00:00Z",
+              }),
+            ])
+          )
       ),
       rest.get(
         `${host}/repos/department-of-veterans-affairs/vets-website/commits`,
-        (req, res, ctx) => res(
-          ctx.json([
-            {
-              commit: {
-                author: {
-                  date: "2023-07-04T00:00:00Z",
+        (req, res, ctx) =>
+          res(
+            ctx.json([
+              createCommit({
+                commit: {
+                  author: {
+                    date: "2023-07-04T00:00:00Z",
+                  },
                 },
-              },
-            },
-          ])
-        )
+              }),
+            ])
+          )
       ),
       rest.get(
         `${host}/repos/department-of-veterans-affairs/vets-api/commits`,
@@ -54,5 +54,5 @@ describe("happy path", () => {
     expect(consoleSpy).toHaveBeenCalledWith(
       "Mean Time to First Commit: 3.00 days"
     );
-  })
+  });
 });

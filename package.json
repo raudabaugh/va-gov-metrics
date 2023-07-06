@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "start": "GH_ACCESS_TOKEN=`cat .token` node index.js"
   },
   "author": "ssanders@vmware.com",
@@ -15,5 +16,11 @@
   "devDependencies": {
     "jest": "^29.6.1",
     "msw": "^1.2.2"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "__tests__/factories.js"
+    ]
   }
 }

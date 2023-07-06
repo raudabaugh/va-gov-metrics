@@ -4,27 +4,38 @@ const GitHubHandleExtractor = require("./mean-time-to-first-commit/gitHubHandleE
 const OnboarderMapper = require("./mean-time-to-first-commit/onboarderMapper");
 const TimeToFirstCommitCollector = require("./mean-time-to-first-commit/timeToFirstCommitCollector");
 const FirstCommitFinder = require("./mean-time-to-first-commit/firstCommitFinder");
-const MeanTimeToFirstCommitCalculator = require("./mean-time-to-first-commit/meanTimeToFirstCommitCalculator");
+const MeanTimeToFirstCommitCalculator = require("./mean-time-to-first-commit/MeanTimeToFirstCommitCalculator");
 
 const octokit = new Octokit({
-    auth: process.env.GH_ACCESS_TOKEN
+  auth: process.env.GH_ACCESS_TOKEN,
 });
 
-const onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder(octokit);
+const onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder(
+  octokit
+);
 const gitHubHandleExtractor = new GitHubHandleExtractor();
 const onboarderMapper = new OnboarderMapper(gitHubHandleExtractor);
 const firstCommitFinder = new FirstCommitFinder(octokit);
-const timeToFirstCommitCollector = new TimeToFirstCommitCollector(firstCommitFinder);
+const timeToFirstCommitCollector = new TimeToFirstCommitCollector(
+  firstCommitFinder
+);
 
-const meanTimeToFirstCommitCalculator = new MeanTimeToFirstCommitCalculator(onboardingTemplateIssueFinder, onboarderMapper, timeToFirstCommitCollector);
+const meanTimeToFirstCommitCalculator = new MeanTimeToFirstCommitCalculator(
+  onboardingTemplateIssueFinder,
+  onboarderMapper,
+  timeToFirstCommitCollector
+);
 
 async function main() {
-    const meanTimeToFirstCommit = await meanTimeToFirstCommitCalculator.calculate();
-    console.log(`Mean Time to First Commit: ${meanTimeToFirstCommit} days`);
+  const meanTimeToFirstCommit =
+    await meanTimeToFirstCommitCalculator.calculate();
+  console.log(
+    `Mean Time to First Commit: ${meanTimeToFirstCommit.toFixed(2)} days`
+  );
 }
 
-if(require.main === module) {
-    main();
+if (require.main === module) {
+  main();
 }
 
 module.exports = main;
