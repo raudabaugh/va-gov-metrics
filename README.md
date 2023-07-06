@@ -12,7 +12,14 @@ Then:
 
     npm run prod
 
-    Total Onboarders: 118
-    Total Committers: 19
+    # Using GitHub Onboarding Template Issues
+    Total Onboarders: 123
+    Total Committers: 20
     Percent of Onboarders Committing: 16%
-    Mean Time to First Commit: 32.96 days
+    Mean Time to First Commit: 33.06 days
+
+    # Using the Roster
+    Total Onboarders: 65
+    Total Committers: 41
+    Percent of Onboarders Committing: 63%
+    Mean Time to First Commit: 70.47 days
