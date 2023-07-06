@@ -1,4 +1,4 @@
-export class TimeToFirstCommitCollector {
+class TimeToFirstCommitCollector {
 
     constructor(firstCommitFinder) {
         this.firstCommitFinder = firstCommitFinder;
@@ -25,9 +25,9 @@ export class TimeToFirstCommitCollector {
             timesToFirstCommit.push(timeToFirstCommit / 1000 / 60 / 60 / 24);
         }
 
-        console.log("Total Onboarders: %d", onboarders.length);
-        console.log("Total Committers: %d", onboarders.length - nonCommitters);
-        console.log("Percent of Onboarders Committing: %d%%", ((onboarders.length - nonCommitters) / onboarders.length).toFixed(2) * 100);
+        // console.log("Total Onboarders: %d", onboarders.length);
+        // console.log("Total Committers: %d", onboarders.length - nonCommitters);
+        // console.log("Percent of Onboarders Committing: %d%%", ((onboarders.length - nonCommitters) / onboarders.length).toFixed(2) * 100);
 
         return timesToFirstCommit;
     }
@@ -40,3 +40,5 @@ export class TimeToFirstCommitCollector {
         return new Date(Math.min(...dates));
     }
 }
+
+module.exports = TimeToFirstCommitCollector;

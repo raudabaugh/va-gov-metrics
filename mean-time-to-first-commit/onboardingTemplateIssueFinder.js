@@ -1,4 +1,4 @@
-export class OnboardingTemplateIssueFinder {
+class OnboardingTemplateIssueFinder {
 
     constructor(octokit) {
         this.octokit = octokit;
@@ -19,3 +19,5 @@ export class OnboardingTemplateIssueFinder {
         return onboardingTemplateIssues;
     }
 }
+
+module.exports = OnboardingTemplateIssueFinder;

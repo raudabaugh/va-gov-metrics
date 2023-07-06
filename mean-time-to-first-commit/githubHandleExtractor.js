@@ -1,4 +1,4 @@
-export class GitHubHandleExtractor {
+class GitHubHandleExtractor {
 
     extractFrom(onboardingTemplateIssue) {
         const body = onboardingTemplateIssue.body;
@@ -35,3 +35,5 @@ export class GitHubHandleExtractor {
         }
     }
 }
+
+module.exports = GitHubHandleExtractor;

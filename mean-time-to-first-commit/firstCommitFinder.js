@@ -1,4 +1,4 @@
-export class FirstCommitFinder {
+class FirstCommitFinder {
 
     constructor(octokit) {
         this.octokit = octokit;
@@ -20,3 +20,5 @@ export class FirstCommitFinder {
         return new Date(firstCommit);
     }
 }
+
+module.exports = FirstCommitFinder;

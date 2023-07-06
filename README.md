@@ -10,7 +10,7 @@ Create a GitHub Access Token with read permissions, and paste it into a file `.t
 
 Then:
 
-    npm run prod
+    npm start
 
     # Using GitHub Onboarding Template Issues
     Total Onboarders: 123

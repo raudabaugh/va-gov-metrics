@@ -1,10 +1,10 @@
-import { Octokit } from "octokit";
-import { OnboardingTemplateIssueFinder } from "./mean-time-to-first-commit/onboardingTemplateIssueFinder.js";
-import { GitHubHandleExtractor } from "./mean-time-to-first-commit/gitHubHandleExtractor.js";
-import { OnboarderMapper } from "./mean-time-to-first-commit/onboarderMapper.js";
-import { TimeToFirstCommitCollector } from "./mean-time-to-first-commit/timeToFirstCommitCollector.js";
-import { FirstCommitFinder } from "./mean-time-to-first-commit/firstCommitFinder.js";
-import { MeanTimeToFirstCommitCalculator } from "./mean-time-to-first-commit/meanTimeToFirstCommitCalculator.js";
+const { Octokit } = require("octokit");
+const OnboardingTemplateIssueFinder = require("./mean-time-to-first-commit/onboardingTemplateIssueFinder");
+const GitHubHandleExtractor = require("./mean-time-to-first-commit/gitHubHandleExtractor");
+const OnboarderMapper = require("./mean-time-to-first-commit/onboarderMapper");
+const TimeToFirstCommitCollector = require("./mean-time-to-first-commit/timeToFirstCommitCollector");
+const FirstCommitFinder = require("./mean-time-to-first-commit/firstCommitFinder");
+const MeanTimeToFirstCommitCalculator = require("./mean-time-to-first-commit/meanTimeToFirstCommitCalculator");
 
 const octokit = new Octokit({
     auth: process.env.GH_ACCESS_TOKEN
@@ -17,5 +17,14 @@ const firstCommitFinder = new FirstCommitFinder(octokit);
 const timeToFirstCommitCollector = new TimeToFirstCommitCollector(firstCommitFinder);
 
 const meanTimeToFirstCommitCalculator = new MeanTimeToFirstCommitCalculator(onboardingTemplateIssueFinder, onboarderMapper, timeToFirstCommitCollector);
-const meanTimeToFirstCommit = await meanTimeToFirstCommitCalculator.calculate();
-console.log("Mean Time to First Commit: %d days", meanTimeToFirstCommit);
+
+async function main() {
+    const meanTimeToFirstCommit = await meanTimeToFirstCommitCalculator.calculate();
+    console.log(`Mean Time to First Commit: ${meanTimeToFirstCommit} days`);
+}
+
+if(require.main === module) {
+    main();
+}
+
+module.exports = main;

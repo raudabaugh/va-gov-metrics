@@ -1,4 +1,4 @@
-export class MeanTimeToFirstCommitCalculator {
+class MeanTimeToFirstCommitCalculator {
 
     constructor(onboardingTemplateIssueFinder, onboarderMapper, timeToFirstCommitCollector) {
         this.onboardingTemplateIssueFinder = onboardingTemplateIssueFinder;
@@ -21,3 +21,5 @@ export class MeanTimeToFirstCommitCalculator {
     }
 
 }
+
+module.exports = MeanTimeToFirstCommitCalculator;
