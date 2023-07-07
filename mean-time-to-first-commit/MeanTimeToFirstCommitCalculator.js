@@ -13,23 +13,16 @@ class MeanTimeToFirstCommitCalculator {
     const onboardingTemplateIssues =
       await this.onboardingTemplateIssueFinder.findAll();
     const onboarders = this.onboarderMapper.map(onboardingTemplateIssues);
-    const timesToFirstCommit = await this.timeToFirstCommitCollector.collect(
+    const daysToFirstCommit = await this.timeToFirstCommitCollector.collect(
       onboarders
     );
 
-    if (timesToFirstCommit.length === 0) {
+    if (!daysToFirstCommit.length) {
       return 0;
     }
 
-    const totalTimeToFirstCommit = timesToFirstCommit.reduce(
-      (sum, firstCommitTime) => {
-        return sum + firstCommitTime;
-      },
-      0
-    );
-
     const meanTimeToFirstCommit =
-      totalTimeToFirstCommit / timesToFirstCommit.length;
+      daysToFirstCommit.reduce((acc, n) => acc + n) / daysToFirstCommit.length;
 
     return meanTimeToFirstCommit;
   }

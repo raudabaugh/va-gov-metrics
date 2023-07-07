@@ -1,8 +1,8 @@
 const { Octokit } = require("octokit");
-const OnboardingTemplateIssueFinder = require("./mean-time-to-first-commit/onboardingTemplateIssueFinder");
+const OnboardingTemplateIssueFinder = require("./mean-time-to-first-commit/OnboardingTemplateIssueFinder");
 const GitHubHandleExtractor = require("./mean-time-to-first-commit/gitHubHandleExtractor");
-const OnboarderMapper = require("./mean-time-to-first-commit/onboarderMapper");
-const TimeToFirstCommitCollector = require("./mean-time-to-first-commit/timeToFirstCommitCollector");
+const OnboarderMapper = require("./mean-time-to-first-commit/OnboarderMapper");
+const TimeToFirstCommitCollector = require("./mean-time-to-first-commit/TimeToFirstCommitCollector");
 const FirstCommitFinder = require("./mean-time-to-first-commit/firstCommitFinder");
 const MeanTimeToFirstCommitCalculator = require("./mean-time-to-first-commit/MeanTimeToFirstCommitCalculator");
 

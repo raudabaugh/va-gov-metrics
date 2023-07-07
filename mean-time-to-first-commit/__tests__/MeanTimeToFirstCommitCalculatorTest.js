@@ -1,28 +1,37 @@
 const MeanTimeToFirstCommitCalculator = require("../MeanTimeToFirstCommitCalculator");
+const OnboardingTemplateIssueFinder = require("../OnboardingTemplateIssueFinder");
+const OnboarderMapper = require("../OnboarderMapper");
+const TimeToFirstCommitCollector = require("../TimeToFirstCommitCollector");
 const {
   createOnboardingTemplateIssue,
   createOnboarder,
 } = require("./factories");
 
+jest.mock("../OnboardingTemplateIssueFinder");
+jest.mock("../OnboarderMapper");
+jest.mock("../TimeToFirstCommitCollector");
+
 describe("MeanTimeToFirstCommitCalculator", () => {
-  describe(".calcuate", () => {
+  describe(".calculate", () => {
     it("returns the mean time to first commit", async () => {
+      const onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder();
       const onboardingTemplateIssue = createOnboardingTemplateIssue({
         created_at: "2023-07-01T00:00:00Z",
       });
-      const onboardingTemplateIssueFinder = {
-        findAll: jest.fn().mockReturnValue([onboardingTemplateIssue]),
-      };
-      const onboarderMapper = {
-        map: jest.fn().mockReturnValue([
-          createOnboarder({
-            onboardingStart: onboardingTemplateIssue.created_at,
-          }),
-        ]),
-      };
-      const timeToFirstCommitCollector = {
-        collect: jest.fn().mockReturnValue([3]),
-      };
+      onboardingTemplateIssueFinder.findAll.mockResolvedValue([
+        onboardingTemplateIssue,
+      ]);
+
+      const onboarderMapper = new OnboarderMapper();
+      onboarderMapper.map.mockReturnValue([
+        createOnboarder({
+          onboardingStart: onboardingTemplateIssue.created_at,
+        }),
+      ]);
+
+      const timeToFirstCommitCollector = new TimeToFirstCommitCollector();
+      timeToFirstCommitCollector.collect.mockResolvedValue([3]);
+
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           onboardingTemplateIssueFinder,
@@ -37,15 +46,15 @@ describe("MeanTimeToFirstCommitCalculator", () => {
     });
 
     it("returns zero when there's no onboarders", async () => {
-      const onboardingTemplateIssueFinder = {
-        findAll: jest.fn().mockReturnValue([]),
-      };
-      const onboarderMapper = {
-        map: jest.fn().mockReturnValue([]),
-      };
-      const timeToFirstCommitCollector = {
-        collect: jest.fn().mockReturnValue([]),
-      };
+      const onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder();
+      onboardingTemplateIssueFinder.findAll.mockResolvedValue([]);
+
+      const onboarderMapper = new OnboarderMapper();
+      onboarderMapper.map.mockReturnValue([]);
+
+      const timeToFirstCommitCollector = new TimeToFirstCommitCollector();
+      timeToFirstCommitCollector.collect.mockResolvedValue([]);
+
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           onboardingTemplateIssueFinder,
