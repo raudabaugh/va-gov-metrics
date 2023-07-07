@@ -11,8 +11,8 @@ describe("OnboarderMapper", () => {
   describe("map", () => {
     it("maps the onboarding template issues to onboarders", () => {
       const gitHubHandleExtractor = new GitHubHandleExtractor();
-      const ghHandle = "some-ghhandle";
-      gitHubHandleExtractor.extractFrom.mockReturnValue(ghHandle);
+      const gitHubHandle = "some-gitHubHandle";
+      gitHubHandleExtractor.extractFrom.mockReturnValue(gitHubHandle);
       const onboarderMapper = new OnboarderMapper(gitHubHandleExtractor);
       const onboardingTemplateIssue = createOnboardingTemplateIssue();
 
@@ -20,7 +20,7 @@ describe("OnboarderMapper", () => {
 
       expect(onboarders).toEqual([
         createOnboarder({
-          ghHandle,
+          gitHubHandle,
           onboardingStart: onboardingTemplateIssue.created_at,
         }),
       ]);

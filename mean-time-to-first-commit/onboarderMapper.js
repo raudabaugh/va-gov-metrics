@@ -5,12 +5,12 @@ class OnboarderMapper {
 
   map(onboardingTemplateIssues) {
     return onboardingTemplateIssues.map((onboardingTemplateIssue) => {
-      const ghHandle = this.gitHubHandleExtractor.extractFrom(
+      const gitHubHandle = this.gitHubHandleExtractor.extractFrom(
         onboardingTemplateIssue
       );
       const onboardingStart = onboardingTemplateIssue.created_at;
 
-      return { ghHandle, onboardingStart: onboardingStart };
+      return { gitHubHandle, onboardingStart: onboardingStart };
     });
   }
 }

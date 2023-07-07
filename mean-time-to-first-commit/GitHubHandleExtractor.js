@@ -1,39 +1,46 @@
 class GitHubHandleExtractor {
+  NO_MATCH = -1;
 
-    extractFrom(onboardingTemplateIssue) {
-        const body = onboardingTemplateIssue.body;
-        const ghHandleBeginRegex = /GitHub handle\*?:.*/g;
-        const ghHandleEndRegex = /\n/u;
+  extractFrom(onboardingTemplateIssue) {
+    const {
+      body,
+      user: { login },
+    } = onboardingTemplateIssue;
 
-        const ghHandleBeginIndex = body.search(ghHandleBeginRegex);
-        if(ghHandleBeginIndex === -1) {
-            return onboardingTemplateIssue.user.login;
-        }
+    const gitHubHandleBeginRegex = /GitHub handle\*?:.*/;
+    const gitHubHandleEndRegex = /\n/;
 
-        const ghHandleEndIndex = body.substring(ghHandleBeginIndex).search(ghHandleEndRegex);
-        if(ghHandleBeginIndex === -1) {
-            return onboardingTemplateIssue.user.login;
-        }
-
-        try {
-            let ghHandle = body.substring(ghHandleBeginIndex).substring(0, ghHandleEndIndex).split(':')[1].trim();
-
-            if(!ghHandle) {
-                return onboardingTemplateIssue.user.login;
-            }
-            // GitHub handle is a link like '[my-github-handle](https'
-            if(ghHandle.startsWith('[')) {
-                ghHandle = ghHandle.split('[')[1].split(']')[0];
-            }
-            if(ghHandle.startsWith('@')) {
-                ghHandle = ghHandle.substring(1);
-            }
-
-            return ghHandle;
-        } catch(e) {
-            return onboardingTemplateIssue.user.login;
-        }
+    const gitHubHandleBeginIndex = body.search(gitHubHandleBeginRegex);
+    if (gitHubHandleBeginIndex === this.NO_MATCH) {
+      return login;
     }
+
+    const gitHubHandleEndIndex = body
+      .substring(gitHubHandleBeginIndex)
+      .search(gitHubHandleEndRegex);
+    if (gitHubHandleEndIndex === this.NO_MATCH) {
+      return login;
+    }
+
+    let gitHubHandle = body
+      .substring(gitHubHandleBeginIndex)
+      .substring(0, gitHubHandleEndIndex)
+      .split(":")[1]
+      .trim();
+
+    if (!gitHubHandle) {
+      return login;
+    }
+    // GitHub handle is a link like '[my-github-handle](https'
+    if (gitHubHandle.startsWith("[")) {
+      gitHubHandle = gitHubHandle.split("[")[1].split("]")[0];
+    }
+    if (gitHubHandle.startsWith("@")) {
+      gitHubHandle = gitHubHandle.substring(1);
+    }
+
+    return gitHubHandle;
+  }
 }
 
 module.exports = GitHubHandleExtractor;
