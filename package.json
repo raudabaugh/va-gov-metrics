@@ -20,7 +20,8 @@
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "__tests__/factories.js"
+      "__tests__/factories.js",
+      "__tests__/helpers.js"
     ]
   }
 }
