@@ -3,7 +3,7 @@ const OnboardingTemplateIssueFinder = require("./mean-time-to-first-commit/Onboa
 const GitHubHandleExtractor = require("./mean-time-to-first-commit/GitHubHandleExtractor");
 const OnboarderMapper = require("./mean-time-to-first-commit/OnboarderMapper");
 const TimeToFirstCommitCollector = require("./mean-time-to-first-commit/TimeToFirstCommitCollector");
-const FirstCommitFinder = require("./mean-time-to-first-commit/firstCommitFinder");
+const FirstCommitFinder = require("./mean-time-to-first-commit/FirstCommitFinder");
 const MeanTimeToFirstCommitCalculator = require("./mean-time-to-first-commit/MeanTimeToFirstCommitCalculator");
 
 const octokit = new Octokit({
