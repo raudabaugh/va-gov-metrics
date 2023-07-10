@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prettier": "prettier . --write",
+    "prettier:ci": "prettier . --check",
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "GH_ACCESS_TOKEN=`cat .token` node index.js"
