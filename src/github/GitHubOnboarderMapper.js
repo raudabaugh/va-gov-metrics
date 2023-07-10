@@ -6,7 +6,7 @@ class GitHubOnboarderMapper {
   map(onboardingTemplateIssues) {
     return onboardingTemplateIssues.map((onboardingTemplateIssue) => {
       const gitHubHandle = this.gitHubHandleExtractor.extractFrom(
-        onboardingTemplateIssue
+        onboardingTemplateIssue,
       );
       const onboardingStart = new Date(onboardingTemplateIssue.created_at);
 

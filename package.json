@@ -4,6 +4,7 @@
   "description": "Metrics for VA.gov",
   "main": "index.js",
   "scripts": {
+    "prettier": "prettier . --write",
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "GH_ACCESS_TOKEN=`cat .token` node index.js"
@@ -15,7 +16,8 @@
   },
   "devDependencies": {
     "jest": "^29.6.1",
-    "msw": "^1.2.2"
+    "msw": "^1.2.2",
+    "prettier": "^3.0.0"
   },
   "jest": {
     "testPathIgnorePatterns": [

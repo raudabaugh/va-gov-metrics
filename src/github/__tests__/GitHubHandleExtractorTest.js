@@ -11,7 +11,7 @@ describe("GitHubHandleExtractor", () => {
       });
 
       const gitHubHandle = gitHubHandleExtractor.extractFrom(
-        onboardingTemplateIssue
+        onboardingTemplateIssue,
       );
 
       expect(gitHubHandle).toBe("octocat");
@@ -26,7 +26,7 @@ describe("GitHubHandleExtractor", () => {
       });
 
       const gitHubHandle = gitHubHandleExtractor.extractFrom(
-        onboardingTemplateIssue
+        onboardingTemplateIssue,
       );
 
       expect(gitHubHandle).toBe("some-login");
@@ -41,7 +41,7 @@ describe("GitHubHandleExtractor", () => {
       });
 
       const gitHubHandle = gitHubHandleExtractor.extractFrom(
-        onboardingTemplateIssue
+        onboardingTemplateIssue,
       );
 
       expect(gitHubHandle).toBe("some-login");
@@ -56,7 +56,7 @@ describe("GitHubHandleExtractor", () => {
       });
 
       const gitHubHandle = gitHubHandleExtractor.extractFrom(
-        onboardingTemplateIssue
+        onboardingTemplateIssue,
       );
 
       expect(gitHubHandle).toBe("some-login");
@@ -68,7 +68,7 @@ describe("GitHubHandleExtractor", () => {
       });
 
       const gitHubHandle = gitHubHandleExtractor.extractFrom(
-        onboardingTemplateIssue
+        onboardingTemplateIssue,
       );
 
       expect(gitHubHandle).toBe("octocat");
@@ -80,7 +80,7 @@ describe("GitHubHandleExtractor", () => {
       });
 
       const gitHubHandle = gitHubHandleExtractor.extractFrom(
-        onboardingTemplateIssue
+        onboardingTemplateIssue,
       );
 
       expect(gitHubHandle).toBe("octocat");

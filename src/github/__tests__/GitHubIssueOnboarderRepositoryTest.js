@@ -20,7 +20,7 @@ describe("GitHubIssueOnboarderRepository", () => {
       gitHubOnboarderMapper.map.mockReturnValue(expected);
       const gitHubIssueOnboarderRepository = new GitHubIssueOnboarderRepository(
         gitHubOnboardingTemplateIssueFinder,
-        gitHubOnboarderMapper
+        gitHubOnboarderMapper,
       );
 
       const actual = await gitHubIssueOnboarderRepository.findAll();

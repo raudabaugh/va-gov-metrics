@@ -12,14 +12,14 @@ describe("DaysToFirstCommitReducer", () => {
         .mockResolvedValueOnce(new Date("2023-07-04T00:00:00Z"))
         .mockResolvedValueOnce(new Date("2023-07-05T00:00:00Z"));
       const daysToFirstCommitReducer = new DaysToFirstCommitReducer(
-        firstCommitDateFinder
+        firstCommitDateFinder,
       );
       const onboarder = createOnboarder({
         onboardingStart: new Date("2023-07-01T00:00:00Z"),
       });
 
       const daysToFirstCommit = await daysToFirstCommitReducer.reduce(
-        onboarder
+        onboarder,
       );
 
       expect(daysToFirstCommit).toEqual(3);
@@ -29,14 +29,14 @@ describe("DaysToFirstCommitReducer", () => {
       const firstCommitDateFinder = new FirstCommitDateFinder();
       firstCommitDateFinder.find.mockResolvedValue(null);
       const daysToFirstCommitReducer = new DaysToFirstCommitReducer(
-        firstCommitDateFinder
+        firstCommitDateFinder,
       );
       const onboarder = createOnboarder({
         onboardingStart: new Date("2023-07-01T00:00:00Z"),
       });
 
       const daysToFirstCommit = await daysToFirstCommitReducer.reduce(
-        onboarder
+        onboarder,
       );
 
       expect(daysToFirstCommit).toBeNull();

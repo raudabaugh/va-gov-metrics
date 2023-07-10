@@ -14,7 +14,7 @@ const octokit = new Octokit({
 const onboarderRepository = () =>
   new GitHubIssueOnboarderRepository(
     new GitHubOnboardingTemplateIssueFinder(octokit),
-    new GitHubOnboarderMapper(new GitHubHandleExtractor())
+    new GitHubOnboarderMapper(new GitHubHandleExtractor()),
   );
 
 const daysToFirstCommitReducer = () =>
@@ -23,13 +23,13 @@ const daysToFirstCommitReducer = () =>
 async function main() {
   const meanTimeToFirstCommitCalculator = new MeanTimeToFirstCommitCalculator(
     onboarderRepository(),
-    daysToFirstCommitReducer()
+    daysToFirstCommitReducer(),
   );
 
   const meanTimeToFirstCommit =
     await meanTimeToFirstCommitCalculator.calculate();
   console.log(
-    `Mean Time to First Commit: ${meanTimeToFirstCommit.toFixed(2)} days`
+    `Mean Time to First Commit: ${meanTimeToFirstCommit.toFixed(2)} days`,
   );
 }
 

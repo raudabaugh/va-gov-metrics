@@ -29,7 +29,7 @@ describe("GitHubOnboardingTemplateIssueFinder", () => {
           createOnboardingTemplateIssue({
             title: "some other kind of issue",
           }),
-        ])
+        ]),
       );
       const gitHubOnboardingTemplateIssueFinder =
         new GitHubOnboardingTemplateIssueFinder(new Octokit());

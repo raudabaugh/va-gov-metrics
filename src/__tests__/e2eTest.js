@@ -37,7 +37,7 @@ describe("happy path", () => {
           },
         }),
       ]),
-      listCommitsForVetsApiMswRequestHandler([])
+      listCommitsForVetsApiMswRequestHandler([]),
     );
   });
 
@@ -47,7 +47,7 @@ describe("happy path", () => {
     await main();
 
     expect(consoleSpy).toHaveBeenCalledWith(
-      "Mean Time to First Commit: 3.00 days"
+      "Mean Time to First Commit: 3.00 days",
     );
   });
 });

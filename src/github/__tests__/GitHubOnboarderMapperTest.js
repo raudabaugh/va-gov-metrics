@@ -12,7 +12,7 @@ describe("GitHubOnboarderMapper", () => {
       const gitHubHandle = "some-gitHubHandle";
       gitHubHandleExtractor.extractFrom.mockReturnValue(gitHubHandle);
       const gitHubOnboarderMapper = new GitHubOnboarderMapper(
-        gitHubHandleExtractor
+        gitHubHandleExtractor,
       );
       const onboardingTemplateIssue = createOnboardingTemplateIssue();
 

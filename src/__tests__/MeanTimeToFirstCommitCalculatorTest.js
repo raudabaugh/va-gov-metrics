@@ -21,7 +21,7 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           gitHubIssueOnboarderRepository,
-          daysToFirstCommitReducer
+          daysToFirstCommitReducer,
         );
 
       const meanTimeToFirstCommit =
@@ -40,7 +40,7 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           gitHubIssueOnboarderRepository,
-          daysToFirstCommitReducer
+          daysToFirstCommitReducer,
         );
 
       const meanTimeToFirstCommit =
@@ -65,7 +65,7 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           gitHubIssueOnboarderRepository,
-          daysToFirstCommitReducer
+          daysToFirstCommitReducer,
         );
 
       const meanTimeToFirstCommit =

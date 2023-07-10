@@ -30,7 +30,7 @@ describe("FirstCommitDateFinder", () => {
               },
             },
           }),
-        ])
+        ]),
       );
 
       const firstCommit = await firstCommitDateFinder.find("vets-api", {});

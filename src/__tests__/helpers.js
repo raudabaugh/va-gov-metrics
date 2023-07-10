@@ -23,7 +23,7 @@ const listCommitsForVetsApiMswRequestHandler = (json) =>
 const vaGitHubApiRequestHandler = (path, json) =>
   rest.get(
     `https://api.github.com/repos/department-of-veterans-affairs${path}`,
-    (req, res, ctx) => res(ctx.json(json))
+    (req, res, ctx) => res(ctx.json(json)),
   );
 
 module.exports = {

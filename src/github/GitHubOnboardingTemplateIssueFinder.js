@@ -11,11 +11,11 @@ class GitHubOnboardingTemplateIssueFinder {
         repo: "va.gov-team",
         labels: "platform-orientation",
         state: "all",
-      }
+      },
     );
 
     return issues.filter(({ title }) =>
-      title.includes("Platform Orientation Template")
+      title.includes("Platform Orientation Template"),
     );
   }
 }

@@ -11,7 +11,7 @@ class FirstCommitDateFinder {
         repo,
         author: gitHubHandle,
         since: onboardingStart,
-      }
+      },
     );
 
     const firstCommit = commits.pop();

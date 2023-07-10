@@ -6,8 +6,8 @@ class DaysToFirstCommitReducer {
   async reduce(onboarder) {
     const possibleFirstCommitDates = await Promise.all(
       ["vets-website", "vets-api"].map((repo) =>
-        this.firstCommitDateFinder.find(repo, onboarder)
-      )
+        this.firstCommitDateFinder.find(repo, onboarder),
+      ),
     );
 
     const firstCommitDates = possibleFirstCommitDates.filter((d) => d);
@@ -16,7 +16,7 @@ class DaysToFirstCommitReducer {
     }
 
     const firstCommitDate = firstCommitDates.reduce((acc, n) =>
-      acc < n ? acc : n
+      acc < n ? acc : n,
     );
     const firstCommitMillis = firstCommitDate - onboarder.onboardingStart;
 
