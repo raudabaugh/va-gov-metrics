@@ -2,18 +2,18 @@ class MeanTimeToFirstCommitCalculator {
   constructor(
     onboardingTemplateIssueFinder,
     onboarderMapper,
-    timeToFirstCommitCollector
+    daysToFirstCommitCollector
   ) {
     this.onboardingTemplateIssueFinder = onboardingTemplateIssueFinder;
     this.onboarderMapper = onboarderMapper;
-    this.timeToFirstCommitCollector = timeToFirstCommitCollector;
+    this.daysToFirstCommitCollector = daysToFirstCommitCollector;
   }
 
   async calculate() {
     const onboardingTemplateIssues =
       await this.onboardingTemplateIssueFinder.findAll();
     const onboarders = this.onboarderMapper.map(onboardingTemplateIssues);
-    const daysToFirstCommit = await this.timeToFirstCommitCollector.collect(
+    const daysToFirstCommit = await this.daysToFirstCommitCollector.collect(
       onboarders
     );
 

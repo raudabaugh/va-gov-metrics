@@ -1,7 +1,7 @@
 const MeanTimeToFirstCommitCalculator = require("../MeanTimeToFirstCommitCalculator");
 const OnboardingTemplateIssueFinder = require("../OnboardingTemplateIssueFinder");
 const OnboarderMapper = require("../OnboarderMapper");
-const TimeToFirstCommitCollector = require("../TimeToFirstCommitCollector");
+const DaysToFirstCommitCollector = require("../DaysToFirstCommitCollector");
 const {
   createOnboardingTemplateIssue,
   createOnboarder,
@@ -9,7 +9,7 @@ const {
 
 jest.mock("../OnboardingTemplateIssueFinder");
 jest.mock("../OnboarderMapper");
-jest.mock("../TimeToFirstCommitCollector");
+jest.mock("../DaysToFirstCommitCollector");
 
 describe("MeanTimeToFirstCommitCalculator", () => {
   describe(".calculate", () => {
@@ -29,14 +29,14 @@ describe("MeanTimeToFirstCommitCalculator", () => {
         }),
       ]);
 
-      const timeToFirstCommitCollector = new TimeToFirstCommitCollector();
-      timeToFirstCommitCollector.collect.mockResolvedValue([3]);
+      const daysToFirstCommitCollector = new DaysToFirstCommitCollector();
+      daysToFirstCommitCollector.collect.mockResolvedValue([3]);
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           onboardingTemplateIssueFinder,
           onboarderMapper,
-          timeToFirstCommitCollector
+          daysToFirstCommitCollector
         );
 
       const meanTimeToFirstCommit =
@@ -52,14 +52,14 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       const onboarderMapper = new OnboarderMapper();
       onboarderMapper.map.mockReturnValue([]);
 
-      const timeToFirstCommitCollector = new TimeToFirstCommitCollector();
-      timeToFirstCommitCollector.collect.mockResolvedValue([]);
+      const daysToFirstCommitCollector = new DaysToFirstCommitCollector();
+      daysToFirstCommitCollector.collect.mockResolvedValue([]);
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           onboardingTemplateIssueFinder,
           onboarderMapper,
-          timeToFirstCommitCollector
+          daysToFirstCommitCollector
         );
 
       const meanTimeToFirstCommit =

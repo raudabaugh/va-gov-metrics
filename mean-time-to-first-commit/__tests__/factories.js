@@ -19,7 +19,7 @@ const createCommit = (attributes = {}) => ({
 
 const createOnboarder = (attributes = {}) => ({
   gitHubHandle: "octocat",
-  onboardingStart: "2023-07-01T00:00:00Z",
+  onboardingStart: new Date("2023-07-01T00:00:00Z"),
   ...attributes,
 });
 

@@ -21,7 +21,7 @@ describe("OnboarderMapper", () => {
       expect(onboarders).toEqual([
         createOnboarder({
           gitHubHandle,
-          onboardingStart: onboardingTemplateIssue.created_at,
+          onboardingStart: new Date(onboardingTemplateIssue.created_at),
         }),
       ]);
     });

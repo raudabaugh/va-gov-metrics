@@ -1,4 +1,4 @@
-class TimeToFirstCommitCollector {
+class DaysToFirstCommitCollector {
   constructor(firstCommitFinder) {
     this.firstCommitFinder = firstCommitFinder;
   }
@@ -20,8 +20,7 @@ class TimeToFirstCommitCollector {
       const firstCommitDate = firstCommitDates.reduce((acc, n) =>
         acc < n ? acc : n
       );
-      const firstCommitMillis =
-        firstCommitDate - new Date(onboarder.onboardingStart);
+      const firstCommitMillis = firstCommitDate - onboarder.onboardingStart;
 
       daysToFirstCommit.push(this.#millisToDays(firstCommitMillis));
     }
@@ -34,4 +33,4 @@ class TimeToFirstCommitCollector {
   }
 }
 
-module.exports = TimeToFirstCommitCollector;
+module.exports = DaysToFirstCommitCollector;

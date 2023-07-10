@@ -8,9 +8,9 @@ class OnboarderMapper {
       const gitHubHandle = this.gitHubHandleExtractor.extractFrom(
         onboardingTemplateIssue
       );
-      const onboardingStart = onboardingTemplateIssue.created_at;
+      const onboardingStart = new Date(onboardingTemplateIssue.created_at);
 
-      return { gitHubHandle, onboardingStart: onboardingStart };
+      return { gitHubHandle, onboardingStart };
     });
   }
 }

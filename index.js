@@ -2,7 +2,7 @@ const { Octokit } = require("octokit");
 const OnboardingTemplateIssueFinder = require("./mean-time-to-first-commit/OnboardingTemplateIssueFinder");
 const GitHubHandleExtractor = require("./mean-time-to-first-commit/GitHubHandleExtractor");
 const OnboarderMapper = require("./mean-time-to-first-commit/OnboarderMapper");
-const TimeToFirstCommitCollector = require("./mean-time-to-first-commit/TimeToFirstCommitCollector");
+const DaysToFirstCommitCollector = require("./mean-time-to-first-commit/DaysToFirstCommitCollector");
 const FirstCommitFinder = require("./mean-time-to-first-commit/FirstCommitFinder");
 const MeanTimeToFirstCommitCalculator = require("./mean-time-to-first-commit/MeanTimeToFirstCommitCalculator");
 
@@ -16,14 +16,14 @@ const onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder(
 const gitHubHandleExtractor = new GitHubHandleExtractor();
 const onboarderMapper = new OnboarderMapper(gitHubHandleExtractor);
 const firstCommitFinder = new FirstCommitFinder(octokit);
-const timeToFirstCommitCollector = new TimeToFirstCommitCollector(
+const daysToFirstCommitCollector = new DaysToFirstCommitCollector(
   firstCommitFinder
 );
 
 const meanTimeToFirstCommitCalculator = new MeanTimeToFirstCommitCalculator(
   onboardingTemplateIssueFinder,
   onboarderMapper,
-  timeToFirstCommitCollector
+  daysToFirstCommitCollector
 );
 
 async function main() {
