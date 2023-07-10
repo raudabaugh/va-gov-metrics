@@ -2,13 +2,14 @@ const { Octokit } = require("octokit");
 const {
   setupMswServer,
   listCommitsForVetsApiMswRequestHandler,
-} = require("./helpers");
+} = require("../../__tests__/helpers");
 const FirstCommitFinder = require("../FirstCommitFinder");
 const { createCommit } = require("./factories");
 
 describe("FirstCommitFinder", () => {
+  const server = setupMswServer();
+
   describe("findFirstCommit", () => {
-    const server = setupMswServer();
     const firstCommitFinder = new FirstCommitFinder(new Octokit());
 
     it("returns the oldest commit date", async () => {

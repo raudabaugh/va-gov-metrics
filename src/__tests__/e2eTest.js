@@ -1,17 +1,18 @@
 const main = require("../../index");
-const { rest } = require("msw");
 const {
   setupMswServer,
-  GITHUB_URI,
   listIssuesForRepoMswRequestHandler,
   listCommitsForVetsWebsiteMswRequestHandler,
   listCommitsForVetsApiMswRequestHandler,
 } = require("./helpers");
-const { createOnboardingTemplateIssue, createCommit } = require("./factories");
-
-const server = setupMswServer();
+const {
+  createOnboardingTemplateIssue,
+} = require("../github/__tests__/factories");
+const { createCommit } = require("../commit/__tests__/factories");
 
 describe("happy path", () => {
+  const server = setupMswServer();
+
   beforeEach(() => {
     server.use(
       listIssuesForRepoMswRequestHandler([

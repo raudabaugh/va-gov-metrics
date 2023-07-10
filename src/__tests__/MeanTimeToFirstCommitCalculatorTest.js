@@ -1,13 +1,13 @@
 const MeanTimeToFirstCommitCalculator = require("../MeanTimeToFirstCommitCalculator");
-const GitHubIssueOnboarderRepository = require("../GitHubIssueOnboarderRepository");
-const DaysToFirstCommitCollector = require("../DaysToFirstCommitCollector");
+const GitHubIssueOnboarderRepository = require("../github/GitHubIssueOnboarderRepository");
+const DaysToFirstCommitCollector = require("../commit/DaysToFirstCommitCollector");
 const { createOnboarder } = require("./factories");
 
-jest.mock("../GitHubIssueOnboarderRepository");
-jest.mock("../DaysToFirstCommitCollector");
+jest.mock("../github/GitHubIssueOnboarderRepository");
+jest.mock("../commit/DaysToFirstCommitCollector");
 
 describe("MeanTimeToFirstCommitCalculator", () => {
-  describe(".calculate", () => {
+  describe("calculate", () => {
     it("returns the mean time to first commit", async () => {
       const gitHubIssueOnboarderRepository =
         new GitHubIssueOnboarderRepository();

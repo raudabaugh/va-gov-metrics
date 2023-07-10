@@ -1,4 +1,4 @@
-class OnboarderMapper {
+class GitHubOnboarderMapper {
   constructor(gitHubHandleExtractor) {
     this.gitHubHandleExtractor = gitHubHandleExtractor;
   }
@@ -15,4 +15,4 @@ class OnboarderMapper {
   }
 }
 
-module.exports = OnboarderMapper;
+module.exports = GitHubOnboarderMapper;

@@ -1,6 +1,6 @@
 const DaysToFirstCommitCollector = require("../DaysToFirstCommitCollector");
 const FirstCommitFinder = require("../FirstCommitFinder");
-const { createOnboarder } = require("./factories");
+const { createOnboarder } = require("../../__tests__/factories");
 
 jest.mock("../FirstCommitFinder");
 

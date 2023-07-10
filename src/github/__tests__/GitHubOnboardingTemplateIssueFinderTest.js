@@ -1,23 +1,22 @@
 const { Octokit } = require("octokit");
-const OnboardingTemplateIssueFinder = require("../OnboardingTemplateIssueFinder");
+const GitHubOnboardingTemplateIssueFinder = require("../GitHubOnboardingTemplateIssueFinder");
 const { createOnboardingTemplateIssue } = require("./factories");
 const {
   setupMswServer,
   listIssuesForRepoMswRequestHandler,
-} = require("./helpers");
+} = require("../../__tests__/helpers");
 
-const server = setupMswServer();
+describe("GitHubOnboardingTemplateIssueFinder", () => {
+  const server = setupMswServer();
 
-describe("OnboardingTemplateIssueFinder", () => {
   describe("findAll", () => {
     it("returns all onboarding template issues", async () => {
       const expected = [createOnboardingTemplateIssue()];
       server.use(listIssuesForRepoMswRequestHandler(expected));
-      const onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder(
-        new Octokit()
-      );
+      const gitHubOnboardingTemplateIssueFinder =
+        new GitHubOnboardingTemplateIssueFinder(new Octokit());
 
-      const actual = await onboardingTemplateIssueFinder.findAll();
+      const actual = await gitHubOnboardingTemplateIssueFinder.findAll();
 
       expect(actual).toEqual(expected);
     });
@@ -32,11 +31,10 @@ describe("OnboardingTemplateIssueFinder", () => {
           }),
         ])
       );
-      const onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder(
-        new Octokit()
-      );
+      const gitHubOnboardingTemplateIssueFinder =
+        new GitHubOnboardingTemplateIssueFinder(new Octokit());
 
-      const actual = await onboardingTemplateIssueFinder.findAll();
+      const actual = await gitHubOnboardingTemplateIssueFinder.findAll();
 
       expect(actual).toEqual(expected);
     });

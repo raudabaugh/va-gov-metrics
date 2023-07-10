@@ -1,11 +1,11 @@
 const { Octokit } = require("octokit");
-const OnboardingTemplateIssueFinder = require("./mean-time-to-first-commit/OnboardingTemplateIssueFinder");
-const GitHubHandleExtractor = require("./mean-time-to-first-commit/GitHubHandleExtractor");
-const OnboarderMapper = require("./mean-time-to-first-commit/OnboarderMapper");
-const GitHubIssueOnboarderRepository = require("./mean-time-to-first-commit/GitHubIssueOnboarderRepository");
-const DaysToFirstCommitCollector = require("./mean-time-to-first-commit/DaysToFirstCommitCollector");
-const FirstCommitFinder = require("./mean-time-to-first-commit/FirstCommitFinder");
-const MeanTimeToFirstCommitCalculator = require("./mean-time-to-first-commit/MeanTimeToFirstCommitCalculator");
+const GitHubOnboardingTemplateIssueFinder = require("./src/github/GitHubOnboardingTemplateIssueFinder");
+const GitHubHandleExtractor = require("./src/github/GitHubHandleExtractor");
+const GitHubOnboarderMapper = require("./src/github/GitHubOnboarderMapper");
+const GitHubIssueOnboarderRepository = require("./src/github/GitHubIssueOnboarderRepository");
+const DaysToFirstCommitCollector = require("./src/commit/DaysToFirstCommitCollector");
+const FirstCommitFinder = require("./src/commit/FirstCommitFinder");
+const MeanTimeToFirstCommitCalculator = require("./src/MeanTimeToFirstCommitCalculator");
 
 const octokit = new Octokit({
   auth: process.env.GH_ACCESS_TOKEN,
@@ -13,8 +13,8 @@ const octokit = new Octokit({
 
 const onboarderRepository = () =>
   new GitHubIssueOnboarderRepository(
-    new OnboardingTemplateIssueFinder(octokit),
-    new OnboarderMapper(new GitHubHandleExtractor())
+    new GitHubOnboardingTemplateIssueFinder(octokit),
+    new GitHubOnboarderMapper(new GitHubHandleExtractor())
   );
 
 const daysToFirstCommitCollector = () =>

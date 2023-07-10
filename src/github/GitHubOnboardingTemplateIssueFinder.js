@@ -1,10 +1,10 @@
-class OnboardingTemplateIssueFinder {
+class GitHubOnboardingTemplateIssueFinder {
   constructor(octokit) {
     this.octokit = octokit;
   }
 
   async findAll() {
-    const possibleOnboardingTemplateIssues = await this.octokit.paginate(
+    const issues = await this.octokit.paginate(
       this.octokit.rest.issues.listForRepo,
       {
         owner: "department-of-veterans-affairs",
@@ -14,10 +14,10 @@ class OnboardingTemplateIssueFinder {
       }
     );
 
-    return possibleOnboardingTemplateIssues.filter(({ title }) =>
+    return issues.filter(({ title }) =>
       title.includes("Platform Orientation Template")
     );
   }
 }
 
-module.exports = OnboardingTemplateIssueFinder;
+module.exports = GitHubOnboardingTemplateIssueFinder;
