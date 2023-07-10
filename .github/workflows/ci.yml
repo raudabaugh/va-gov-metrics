@@ -22,4 +22,5 @@ jobs:
           cache: "npm"
       - run: npm install
       - run: npm run prettier:ci
+      - run: npm lint
       - run: npm test
