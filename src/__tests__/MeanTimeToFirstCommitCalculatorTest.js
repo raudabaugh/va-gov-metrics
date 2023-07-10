@@ -1,10 +1,10 @@
 const MeanTimeToFirstCommitCalculator = require("../MeanTimeToFirstCommitCalculator");
 const GitHubIssueOnboarderRepository = require("../github/GitHubIssueOnboarderRepository");
-const DaysToFirstCommitCollector = require("../commit/DaysToFirstCommitCollector");
+const DaysToFirstCommitReducer = require("../commit/DaysToFirstCommitReducer");
 const { createOnboarder } = require("./factories");
 
 jest.mock("../github/GitHubIssueOnboarderRepository");
-jest.mock("../commit/DaysToFirstCommitCollector");
+jest.mock("../commit/DaysToFirstCommitReducer");
 
 describe("MeanTimeToFirstCommitCalculator", () => {
   describe("calculate", () => {
@@ -15,13 +15,13 @@ describe("MeanTimeToFirstCommitCalculator", () => {
         createOnboarder(),
       ]);
 
-      const daysToFirstCommitCollector = new DaysToFirstCommitCollector();
-      daysToFirstCommitCollector.collect.mockResolvedValue([3]);
+      const daysToFirstCommitReducer = new DaysToFirstCommitReducer();
+      daysToFirstCommitReducer.reduce.mockResolvedValue([3]);
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           gitHubIssueOnboarderRepository,
-          daysToFirstCommitCollector
+          daysToFirstCommitReducer
         );
 
       const meanTimeToFirstCommit =
@@ -35,19 +35,43 @@ describe("MeanTimeToFirstCommitCalculator", () => {
         new GitHubIssueOnboarderRepository();
       gitHubIssueOnboarderRepository.findAll.mockResolvedValue([]);
 
-      const daysToFirstCommitCollector = new DaysToFirstCommitCollector();
-      daysToFirstCommitCollector.collect.mockResolvedValue([]);
+      const daysToFirstCommitReducer = new DaysToFirstCommitReducer();
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           gitHubIssueOnboarderRepository,
-          daysToFirstCommitCollector
+          daysToFirstCommitReducer
         );
 
       const meanTimeToFirstCommit =
         await meanTimeToFirstCommitCalculator.calculate();
 
       expect(meanTimeToFirstCommit).toEqual(0);
+    });
+
+    it("ignores onboarders without a commit", async () => {
+      const gitHubIssueOnboarderRepository =
+        new GitHubIssueOnboarderRepository();
+      gitHubIssueOnboarderRepository.findAll.mockResolvedValue([
+        createOnboarder(),
+        createOnboarder(),
+      ]);
+
+      const daysToFirstCommitReducer = new DaysToFirstCommitReducer();
+      daysToFirstCommitReducer.reduce
+        .mockResolvedValueOnce(3)
+        .mockResolvedValueOnce(null);
+
+      const meanTimeToFirstCommitCalculator =
+        new MeanTimeToFirstCommitCalculator(
+          gitHubIssueOnboarderRepository,
+          daysToFirstCommitReducer
+        );
+
+      const meanTimeToFirstCommit =
+        await meanTimeToFirstCommitCalculator.calculate();
+
+      expect(meanTimeToFirstCommit).toEqual(3);
     });
   });
 });

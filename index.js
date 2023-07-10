@@ -3,8 +3,8 @@ const GitHubOnboardingTemplateIssueFinder = require("./src/github/GitHubOnboardi
 const GitHubHandleExtractor = require("./src/github/GitHubHandleExtractor");
 const GitHubOnboarderMapper = require("./src/github/GitHubOnboarderMapper");
 const GitHubIssueOnboarderRepository = require("./src/github/GitHubIssueOnboarderRepository");
-const DaysToFirstCommitCollector = require("./src/commit/DaysToFirstCommitCollector");
-const FirstCommitFinder = require("./src/commit/FirstCommitFinder");
+const DaysToFirstCommitReducer = require("./src/commit/DaysToFirstCommitReducer");
+const FirstCommitDateFinder = require("./src/commit/FirstCommitDateFinder");
 const MeanTimeToFirstCommitCalculator = require("./src/MeanTimeToFirstCommitCalculator");
 
 const octokit = new Octokit({
@@ -17,13 +17,13 @@ const onboarderRepository = () =>
     new GitHubOnboarderMapper(new GitHubHandleExtractor())
   );
 
-const daysToFirstCommitCollector = () =>
-  new DaysToFirstCommitCollector(new FirstCommitFinder(octokit));
+const daysToFirstCommitReducer = () =>
+  new DaysToFirstCommitReducer(new FirstCommitDateFinder(octokit));
 
 async function main() {
   const meanTimeToFirstCommitCalculator = new MeanTimeToFirstCommitCalculator(
     onboarderRepository(),
-    daysToFirstCommitCollector()
+    daysToFirstCommitReducer()
   );
 
   const meanTimeToFirstCommit =

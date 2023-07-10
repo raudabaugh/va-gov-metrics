@@ -1,18 +1,22 @@
 class MeanTimeToFirstCommitCalculator {
-  constructor(onboarderRepository, daysToFirstCommitCollector) {
+  constructor(onboarderRepository, daysToFirstCommitReducer) {
     this.onboarderRepository = onboarderRepository;
-    this.daysToFirstCommitCollector = daysToFirstCommitCollector;
+    this.daysToFirstCommitReducer = daysToFirstCommitReducer;
   }
 
   async calculate() {
     const onboarders = await this.onboarderRepository.findAll();
-    const daysToFirstCommit = await this.daysToFirstCommitCollector.collect(
-      onboarders
+    const possibleDaysToFirstCommit = await Promise.all(
+      onboarders.map((onboarder) =>
+        this.daysToFirstCommitReducer.reduce(onboarder)
+      )
     );
 
-    if (!daysToFirstCommit.length) {
+    if (!possibleDaysToFirstCommit.length) {
       return 0;
     }
+
+    const daysToFirstCommit = possibleDaysToFirstCommit.filter((d) => d);
 
     const meanTimeToFirstCommit =
       daysToFirstCommit.reduce((acc, n) => acc + n) / daysToFirstCommit.length;

@@ -3,14 +3,14 @@ const {
   setupMswServer,
   listCommitsForVetsApiMswRequestHandler,
 } = require("../../__tests__/helpers");
-const FirstCommitFinder = require("../FirstCommitFinder");
+const FirstCommitDateFinder = require("../FirstCommitDateFinder");
 const { createCommit } = require("./factories");
 
-describe("FirstCommitFinder", () => {
+describe("FirstCommitDateFinder", () => {
   const server = setupMswServer();
 
   describe("findFirstCommit", () => {
-    const firstCommitFinder = new FirstCommitFinder(new Octokit());
+    const firstCommitDateFinder = new FirstCommitDateFinder(new Octokit());
 
     it("returns the oldest commit date", async () => {
       const date = "2023-07-04T00:00:00Z";
@@ -33,7 +33,7 @@ describe("FirstCommitFinder", () => {
         ])
       );
 
-      const firstCommit = await firstCommitFinder.find("vets-api", {});
+      const firstCommit = await firstCommitDateFinder.find("vets-api", {});
 
       expect(firstCommit).toEqual(new Date(date));
     });
@@ -41,7 +41,7 @@ describe("FirstCommitFinder", () => {
     it("returns null when there is no first commit", async () => {
       server.use(listCommitsForVetsApiMswRequestHandler([]));
 
-      const firstCommit = await firstCommitFinder.find("vets-api", {});
+      const firstCommit = await firstCommitDateFinder.find("vets-api", {});
 
       expect(firstCommit).toBeNull();
     });
