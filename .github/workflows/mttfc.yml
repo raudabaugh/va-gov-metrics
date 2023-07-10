@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: npm install
+      - run: npm install --omit=dev
       - name: Collect MTTFC
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
