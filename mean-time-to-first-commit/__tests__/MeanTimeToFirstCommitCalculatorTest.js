@@ -1,32 +1,18 @@
 const MeanTimeToFirstCommitCalculator = require("../MeanTimeToFirstCommitCalculator");
-const OnboardingTemplateIssueFinder = require("../OnboardingTemplateIssueFinder");
-const OnboarderMapper = require("../OnboarderMapper");
+const GitHubIssueOnboarderRepository = require("../GitHubIssueOnboarderRepository");
 const DaysToFirstCommitCollector = require("../DaysToFirstCommitCollector");
-const {
-  createOnboardingTemplateIssue,
-  createOnboarder,
-} = require("./factories");
+const { createOnboarder } = require("./factories");
 
-jest.mock("../OnboardingTemplateIssueFinder");
-jest.mock("../OnboarderMapper");
+jest.mock("../GitHubIssueOnboarderRepository");
 jest.mock("../DaysToFirstCommitCollector");
 
 describe("MeanTimeToFirstCommitCalculator", () => {
   describe(".calculate", () => {
     it("returns the mean time to first commit", async () => {
-      const onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder();
-      const onboardingTemplateIssue = createOnboardingTemplateIssue({
-        created_at: "2023-07-01T00:00:00Z",
-      });
-      onboardingTemplateIssueFinder.findAll.mockResolvedValue([
-        onboardingTemplateIssue,
-      ]);
-
-      const onboarderMapper = new OnboarderMapper();
-      onboarderMapper.map.mockReturnValue([
-        createOnboarder({
-          onboardingStart: onboardingTemplateIssue.created_at,
-        }),
+      const gitHubIssueOnboarderRepository =
+        new GitHubIssueOnboarderRepository();
+      gitHubIssueOnboarderRepository.findAll.mockResolvedValue([
+        createOnboarder(),
       ]);
 
       const daysToFirstCommitCollector = new DaysToFirstCommitCollector();
@@ -34,8 +20,7 @@ describe("MeanTimeToFirstCommitCalculator", () => {
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
-          onboardingTemplateIssueFinder,
-          onboarderMapper,
+          gitHubIssueOnboarderRepository,
           daysToFirstCommitCollector
         );
 
@@ -46,19 +31,16 @@ describe("MeanTimeToFirstCommitCalculator", () => {
     });
 
     it("returns zero when there's no onboarders", async () => {
-      const onboardingTemplateIssueFinder = new OnboardingTemplateIssueFinder();
-      onboardingTemplateIssueFinder.findAll.mockResolvedValue([]);
-
-      const onboarderMapper = new OnboarderMapper();
-      onboarderMapper.map.mockReturnValue([]);
+      const gitHubIssueOnboarderRepository =
+        new GitHubIssueOnboarderRepository();
+      gitHubIssueOnboarderRepository.findAll.mockResolvedValue([]);
 
       const daysToFirstCommitCollector = new DaysToFirstCommitCollector();
       daysToFirstCommitCollector.collect.mockResolvedValue([]);
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
-          onboardingTemplateIssueFinder,
-          onboarderMapper,
+          gitHubIssueOnboarderRepository,
           daysToFirstCommitCollector
         );
 
