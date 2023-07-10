@@ -1,4 +1,4 @@
-[![build](https://github.com/p-ssanders/va-gov-metrics/actions/workflows/ci.yml/badge.svg)](https://github.com/p-ssanders/va-gov-metrics/actions/workflows/ci.yml)
+[![CI](https://github.com/p-ssanders/va-gov-metrics/actions/workflows/ci.yml/badge.svg)](https://github.com/p-ssanders/va-gov-metrics/actions/workflows/ci.yml)
 
 # VA.gov Metrics
 
