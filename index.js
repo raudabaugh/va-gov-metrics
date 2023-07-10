@@ -8,7 +8,7 @@ const FirstCommitDateFinder = require("./src/commit/FirstCommitDateFinder");
 const MeanTimeToFirstCommitCalculator = require("./src/MeanTimeToFirstCommitCalculator");
 
 const octokit = new Octokit({
-  auth: process.env.GH_ACCESS_TOKEN,
+  auth: process.env.GITHUB_TOKEN,
 });
 
 const onboarderRepository = () =>

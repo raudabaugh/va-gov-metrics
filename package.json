@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "prettier": "prettier . --write",
     "prettier:ci": "prettier . --check",
-    "start": "GH_ACCESS_TOKEN=`cat .token` node index.js",
+    "start": "node index.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },
