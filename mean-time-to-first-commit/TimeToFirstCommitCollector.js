@@ -5,32 +5,32 @@ class TimeToFirstCommitCollector {
 
   async collect(onboarders) {
     const daysToFirstCommit = [];
-    for (const { gitHubHandle, onboardingStart } of onboarders) {
-      const firstCommitDates = await Promise.all(
+    for (const onboarder of onboarders) {
+      const possibleFirstCommitDates = await Promise.all(
         ["vets-website", "vets-api"].map((repositoryName) =>
-          this.firstCommitFinder.findFirstCommit(
-            repositoryName,
-            gitHubHandle,
-            onboardingStart
-          )
+          this.firstCommitFinder.find(repositoryName, onboarder)
         )
       );
 
-      const firstCommitDate = firstCommitDates
-        .filter((d) => !isNaN(d.valueOf()))
-        .reduce((acc, n) => (acc < n ? acc : n), new Date(undefined));
-
-      if (isNaN(firstCommitDate)) {
+      const firstCommitDates = possibleFirstCommitDates.filter((d) => d);
+      if (!firstCommitDates.length) {
         continue;
       }
 
+      const firstCommitDate = firstCommitDates.reduce((acc, n) =>
+        acc < n ? acc : n
+      );
       const firstCommitMillis =
-        new Date(firstCommitDate) - new Date(onboardingStart);
+        firstCommitDate - new Date(onboarder.onboardingStart);
 
-      daysToFirstCommit.push(firstCommitMillis / 1000 / 60 / 60 / 24);
+      daysToFirstCommit.push(this.#millisToDays(firstCommitMillis));
     }
 
     return daysToFirstCommit;
+  }
+
+  #millisToDays(firstCommitMillis) {
+    return firstCommitMillis / 1000 / 60 / 60 / 24;
   }
 }
 

@@ -16,10 +16,18 @@ describe("happy path", () => {
     server.use(
       listIssuesForRepoMswRequestHandler([
         createOnboardingTemplateIssue({
+          body: "GitHub handle*: octocat\n",
           created_at: "2023-07-01T00:00:00Z",
         }),
       ]),
       listCommitsForVetsWebsiteMswRequestHandler([
+        createCommit({
+          commit: {
+            author: {
+              date: "2023-07-05T00:00:00Z",
+            },
+          },
+        }),
         createCommit({
           commit: {
             author: {

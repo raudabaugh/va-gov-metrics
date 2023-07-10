@@ -8,7 +8,7 @@ describe("TimeToFirstCommitCollector", () => {
   describe("collect", () => {
     it("returns an array of first time to commit in days", async () => {
       const firstCommitFinder = new FirstCommitFinder();
-      firstCommitFinder.findFirstCommit
+      firstCommitFinder.find
         .mockResolvedValueOnce(new Date("2023-07-04T00:00:00Z"))
         .mockResolvedValueOnce(new Date("2023-07-05T00:00:00Z"));
       const timeToFirstCommitCollector = new TimeToFirstCommitCollector(
@@ -29,9 +29,7 @@ describe("TimeToFirstCommitCollector", () => {
 
     it("returns an empty array when no commits are found", async () => {
       const firstCommitFinder = new FirstCommitFinder();
-      firstCommitFinder.findFirstCommit
-        .mockResolvedValueOnce(new Date(undefined))
-        .mockResolvedValueOnce(new Date(undefined));
+      firstCommitFinder.find.mockResolvedValue(null);
       const timeToFirstCommitCollector = new TimeToFirstCommitCollector(
         firstCommitFinder
       );
