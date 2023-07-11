@@ -15,7 +15,8 @@ const listIssuesForRepoMswRequestHandler = (json) =>
   rest.get(vaGitHubApiUrl("/va.gov-team/issues"), (req, res, ctx) =>
     res(
       ctx.json(
-        req.url.searchParams.get("labels") === "platform-orientation"
+        req.url.searchParams.get("labels") === "platform-orientation" &&
+          req.url.searchParams.get("state") === "all"
           ? json
           : [],
       ),

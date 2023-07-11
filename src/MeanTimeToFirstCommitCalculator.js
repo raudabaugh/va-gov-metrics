@@ -17,6 +17,9 @@ class MeanTimeToFirstCommitCalculator {
     }
 
     const daysToFirstCommit = possibleDaysToFirstCommit.filter((d) => d);
+    if (!daysToFirstCommit.length) {
+      return 0;
+    }
 
     const meanTimeToFirstCommit =
       daysToFirstCommit.reduce((acc, n) => acc + n) / daysToFirstCommit.length;
