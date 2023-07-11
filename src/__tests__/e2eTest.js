@@ -5,6 +5,7 @@ const {
   listCommitsForVetsWebsiteMswRequestHandler,
   listCommitsForVetsApiMswRequestHandler,
 } = require("./helpers");
+const { createOnboarder } = require("./factories");
 const {
   createOnboardingTemplateIssue,
 } = require("../github/__tests__/factories");
@@ -14,14 +15,17 @@ describe("happy path", () => {
   const server = setupMswServer();
 
   beforeEach(() => {
+    const onboardingTemplateIssue = createOnboardingTemplateIssue({
+      body: "GitHub handle*: octocat\n",
+      created_at: "2023-07-01T00:00:00Z",
+    });
+    const onboarder = createOnboarder({
+      gitHubHandle: "octocat",
+      onboardingStart: new Date(onboardingTemplateIssue.created_at),
+    });
     server.use(
-      listIssuesForRepoMswRequestHandler([
-        createOnboardingTemplateIssue({
-          body: "GitHub handle*: octocat\n",
-          created_at: "2023-07-01T00:00:00Z",
-        }),
-      ]),
-      listCommitsForVetsWebsiteMswRequestHandler([
+      listIssuesForRepoMswRequestHandler([onboardingTemplateIssue]),
+      listCommitsForVetsWebsiteMswRequestHandler(onboarder, [
         createCommit({
           commit: {
             author: {
@@ -37,7 +41,7 @@ describe("happy path", () => {
           },
         }),
       ]),
-      listCommitsForVetsApiMswRequestHandler([]),
+      listCommitsForVetsApiMswRequestHandler(onboarder, []),
     );
   });
 

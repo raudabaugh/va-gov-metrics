@@ -5,7 +5,7 @@ const { createOnboarder } = require("../../__tests__/factories");
 jest.mock("../FirstCommitDateFinder");
 
 describe("DaysToFirstCommitReducer", () => {
-  describe("collect", () => {
+  describe("reduce", () => {
     it("returns the first time to commit in days", async () => {
       const firstCommitDateFinder = new FirstCommitDateFinder();
       firstCommitDateFinder.find

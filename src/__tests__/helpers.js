@@ -12,19 +12,44 @@ const setupMswServer = () => {
 };
 
 const listIssuesForRepoMswRequestHandler = (json) =>
-  vaGitHubApiRequestHandler("/va.gov-team/issues", json);
-
-const listCommitsForVetsWebsiteMswRequestHandler = (json) =>
-  vaGitHubApiRequestHandler("/vets-website/commits", json);
-
-const listCommitsForVetsApiMswRequestHandler = (json) =>
-  vaGitHubApiRequestHandler("/vets-api/commits", json);
-
-const vaGitHubApiRequestHandler = (path, json) =>
-  rest.get(
-    `https://api.github.com/repos/department-of-veterans-affairs${path}`,
-    (req, res, ctx) => res(ctx.json(json)),
+  rest.get(vaGitHubApiUrl("/va.gov-team/issues"), (req, res, ctx) =>
+    res(
+      ctx.json(
+        req.url.searchParams.get("labels") === "platform-orientation"
+          ? json
+          : [],
+      ),
+    ),
   );
+
+const listCommitsForVetsWebsiteMswRequestHandler = (onboarder, json) =>
+  vaGitHubListCommitsApiMswRequestHandler(
+    "/vets-website/commits",
+    onboarder,
+    json,
+  );
+
+const listCommitsForVetsApiMswRequestHandler = (onboarder, json) =>
+  vaGitHubListCommitsApiMswRequestHandler("/vets-api/commits", onboarder, json);
+
+const vaGitHubListCommitsApiMswRequestHandler = (
+  path,
+  { gitHubHandle, onboardingStart },
+  json,
+) =>
+  rest.get(vaGitHubApiUrl(path), (req, res, ctx) =>
+    res(
+      ctx.json(
+        req.url.searchParams.get("author") === gitHubHandle &&
+          req.url.searchParams.get("since") === onboardingStart.toString()
+          ? json
+          : [],
+      ),
+    ),
+  );
+
+const vaGitHubApiUrl = (path) =>
+  `https://api.github.com/repos/department-of-veterans-affairs${path}`;
 
 module.exports = {
   setupMswServer,
