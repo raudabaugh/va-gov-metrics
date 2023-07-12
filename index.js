@@ -1,8 +1,6 @@
 const { Octokit } = require("@octokit/rest");
 const { throttling } = require("@octokit/plugin-throttling");
-const GitHubOnboardingTemplateIssueFinder = require("./src/github/GitHubOnboardingTemplateIssueFinder");
 const GitHubHandleExtractor = require("./src/github/GitHubHandleExtractor");
-const GitHubOnboarderMapper = require("./src/github/GitHubOnboarderMapper");
 const GitHubIssueOnboarderRepository = require("./src/github/GitHubIssueOnboarderRepository");
 const RosterOnboarderRepository = require("./src/roster/RosterOnboarderRepository");
 const DaysToFirstCommitReducer = require("./src/commit/DaysToFirstCommitReducer");
@@ -22,10 +20,7 @@ const throttledOctokit = () => {
 };
 
 const gitHubIssueOnboarderRepository = (octokit) =>
-  new GitHubIssueOnboarderRepository(
-    new GitHubOnboardingTemplateIssueFinder(octokit),
-    new GitHubOnboarderMapper(new GitHubHandleExtractor()),
-  );
+  new GitHubIssueOnboarderRepository(octokit, new GitHubHandleExtractor());
 
 const daysToFirstCommitReducer = (octokit) =>
   new DaysToFirstCommitReducer(new FirstCommitDateFinder(octokit));
