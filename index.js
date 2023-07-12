@@ -13,8 +13,18 @@ const throttledOctokit = () => {
   return new ThrottledOctokit({
     auth: process.env.GITHUB_TOKEN,
     throttle: {
-      onRateLimit: () => true,
-      onSecondaryRateLimit: () => true,
+      onRateLimit: (retryAfter, { method, url }, octokit) => {
+        octokit.log.warn(
+          `Request quota exhausted for request ${method} ${url}, retrying after ${retryAfter}`,
+        );
+        return true;
+      },
+      onSecondaryRateLimit: (retryAfter, { method, url }, octokit) => {
+        octokit.log.warn(
+          `SecondaryRateLimit detected for request ${method} ${url}, retrying after ${retryAfter}`,
+        );
+        return true;
+      },
     },
   });
 };
