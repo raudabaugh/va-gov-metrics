@@ -1,11 +1,11 @@
 class GitHubHandleExtractor {
   NO_MATCH = -1;
 
-  extractFrom(onboardingTemplateIssue) {
+  extractFrom(onboardingIssue) {
     const {
       body,
       user: { login },
-    } = onboardingTemplateIssue;
+    } = onboardingIssue;
 
     const gitHubHandleBeginRegex = /GitHub handle\*?:.*/;
     const gitHubHandleEndRegex = /\n/;

@@ -1,54 +1,50 @@
 const GitHubIssueOnboarderRepository = require("../GitHubIssueOnboarderRepository");
-const GitHubHandleExtractor = require("../GitHubHandleExtractor");
+const GitHubOnboardingIssue = require("../GitHubOnboardingIssue");
 const { createOnboarder } = require("../../__tests__/factories");
-const { createOnboardingTemplateIssue } = require("./factories");
+const { createOnboardingIssue } = require("./factories");
 const {
   setupMswServer,
   listIssuesForRepoMswRequestHandler,
 } = require("../../__tests__/helpers");
 const { Octokit } = require("@octokit/rest");
 
-jest.mock("../GitHubHandleExtractor");
+jest.mock("../GitHubOnboardingIssue");
 
 describe("GitHubIssueOnboarderRepository", () => {
   const server = setupMswServer();
 
   describe("findAll", () => {
-    it("returns a list of onboarders from GitHub", async () => {
-      const onboardingTemplateIssue = createOnboardingTemplateIssue();
-      server.use(listIssuesForRepoMswRequestHandler([onboardingTemplateIssue]));
+    const onboarder = createOnboarder();
 
-      const gitHubHandleExtractor = new GitHubHandleExtractor();
-      const gitHubHandle = "some-gitHubHandle";
-      gitHubHandleExtractor.extractFrom.mockReturnValue(gitHubHandle);
+    beforeEach(() => {
+      GitHubOnboardingIssue.mockImplementation(() => ({
+        toOnboarder: jest.fn().mockReturnValue(onboarder),
+      }));
+    });
+
+    it("returns a list of onboarders from GitHub onboarding template issues", async () => {
+      const onboardingIssue = createOnboardingIssue();
+      server.use(listIssuesForRepoMswRequestHandler([onboardingIssue]));
 
       const gitHubIssueOnboarderRepository = new GitHubIssueOnboarderRepository(
         new Octokit(),
-        gitHubHandleExtractor,
       );
 
-      const actual = await gitHubIssueOnboarderRepository.findAll();
+      const onboarders = await gitHubIssueOnboarderRepository.findAll();
 
-      expect(actual).toEqual([
-        createOnboarder({
-          gitHubHandle,
-          onboardingStart: new Date(onboardingTemplateIssue.created_at),
-        }),
-      ]);
+      expect(onboarders).toEqual([onboarder]);
     });
 
     it("filters out non-onboarding template issues", async () => {
       server.use(
         listIssuesForRepoMswRequestHandler([
-          createOnboardingTemplateIssue({
+          createOnboardingIssue({
             title: "some other kind of issue",
           }),
         ]),
       );
-      const gitHubHandleExtractor = new GitHubHandleExtractor();
       const gitHubIssueOnboarderRepository = new GitHubIssueOnboarderRepository(
         new Octokit(),
-        gitHubHandleExtractor,
       );
 
       const actual = await gitHubIssueOnboarderRepository.findAll();

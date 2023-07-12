@@ -6,9 +6,7 @@ const {
   listCommitsForVetsApiMswRequestHandler,
 } = require("./helpers");
 const { createOnboarder } = require("./factories");
-const {
-  createOnboardingTemplateIssue,
-} = require("../github/__tests__/factories");
+const { createOnboardingIssue } = require("../github/__tests__/factories");
 const { createCommit } = require("../commit/__tests__/factories");
 
 jest.mock("../roster/roster.json", () => [
@@ -23,16 +21,16 @@ describe("happy path", () => {
 
   describe("using the GitHub onboarding template issue as an onboarder source", () => {
     beforeEach(() => {
-      const onboardingTemplateIssue = createOnboardingTemplateIssue({
+      const onboardingIssue = createOnboardingIssue({
         body: "GitHub handle*: octocat\n",
         created_at: "2023-07-01T00:00:00Z",
       });
       const onboarder = createOnboarder({
         gitHubHandle: "octocat",
-        onboardingStart: new Date(onboardingTemplateIssue.created_at),
+        onboardingStart: new Date(onboardingIssue.created_at),
       });
       server.use(
-        listIssuesForRepoMswRequestHandler([onboardingTemplateIssue]),
+        listIssuesForRepoMswRequestHandler([onboardingIssue]),
         listCommitsForVetsWebsiteMswRequestHandler(onboarder, [
           createCommit({
             commit: {
