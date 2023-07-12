@@ -14,7 +14,8 @@
   "author": "ssanders@vmware.com",
   "license": "ISC",
   "dependencies": {
-    "octokit": "^2.1.0"
+    "@octokit/plugin-throttling": "^7.0.0",
+    "@octokit/rest": "^20.0.1"
   },
   "devDependencies": {
     "eslint": "^8.44.0",

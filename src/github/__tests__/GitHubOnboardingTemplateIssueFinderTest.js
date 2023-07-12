@@ -1,4 +1,4 @@
-const { Octokit } = require("octokit");
+const { Octokit } = require("@octokit/rest");
 const GitHubOnboardingTemplateIssueFinder = require("../GitHubOnboardingTemplateIssueFinder");
 const { createOnboardingTemplateIssue } = require("./factories");
 const {
