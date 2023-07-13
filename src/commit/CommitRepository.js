@@ -1,3 +1,5 @@
+const GitHubCommit = require("./GitHubCommit");
+
 class CommitRepository {
   constructor(octokit) {
     this.octokit = octokit;
@@ -15,7 +17,9 @@ class CommitRepository {
     );
 
     const firstCommit = commits.pop();
-    return firstCommit ? new Date(firstCommit.commit.author.date) : null;
+    return firstCommit
+      ? new GitHubCommit({ date: new Date(firstCommit.commit.author.date) })
+      : null;
   }
 }
 

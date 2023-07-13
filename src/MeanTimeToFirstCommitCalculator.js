@@ -8,13 +8,12 @@ class MeanTimeToFirstCommitCalculator {
     const onboarders = await this.onboarderRepository.findAll();
     const possibleDaysToFirstCommit = await Promise.all(
       onboarders.map(async (onboarder) => {
-        const possibleFirstCommitDates = await Promise.all(
+        const possibleFirstCommits = await Promise.all(
           ["vets-website", "vets-api"].map((repo) =>
             this.commitRepository.findFirstCommit(repo, onboarder),
           ),
         );
-
-        return onboarder.daysToFirstCommit(possibleFirstCommitDates);
+        return onboarder.daysToFirstCommit(possibleFirstCommits);
       }),
     );
 

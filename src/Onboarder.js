@@ -4,13 +4,15 @@ class Onboarder {
     this.onboardingStart = onboardingStart;
   }
 
-  daysToFirstCommit(possibleCommitDates) {
-    const commitDates = possibleCommitDates.filter((d) => d);
-    if (!commitDates.length) {
+  daysToFirstCommit(possibleCommits) {
+    const commits = possibleCommits.filter((commit) => commit);
+    if (!commits.length) {
       return null;
     }
 
-    const firstCommitDate = commitDates.reduce((acc, n) => (acc < n ? acc : n));
+    const firstCommitDate = commits
+      .map(({ date }) => date)
+      .reduce((acc, date) => (acc < date ? acc : date));
     const firstCommitDiffInMillis = firstCommitDate - this.onboardingStart;
     const firstCommitDiffInDays = firstCommitDiffInMillis / 1000 / 60 / 60 / 24;
     return firstCommitDiffInDays;

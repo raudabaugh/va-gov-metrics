@@ -1,18 +1,23 @@
+const { createGitHubCommit } = require("../commit/__tests__/factories");
 const { createOnboarder } = require("./factories");
 
 describe("Onboarder", () => {
   describe("daysToFirstCommit", () => {
     it("returns the first time to commit in days", () => {
-      const possibleCommitDates = [
-        new Date("2023-07-04T00:00:00Z"),
-        new Date("2023-07-05T00:00:00Z"),
+      const possibleFirstCommits = [
+        createGitHubCommit({
+          date: new Date("2023-07-04T00:00:00Z"),
+        }),
+        createGitHubCommit({
+          date: new Date("2023-07-05T00:00:00Z"),
+        }),
       ];
       const onboarder = createOnboarder({
         onboardingStart: new Date("2023-07-01T00:00:00Z"),
       });
 
       const daysToFirstCommit =
-        onboarder.daysToFirstCommit(possibleCommitDates);
+        onboarder.daysToFirstCommit(possibleFirstCommits);
 
       expect(daysToFirstCommit).toEqual(3);
     });

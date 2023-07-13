@@ -36,17 +36,17 @@ const commitRepository = (octokit) => new CommitRepository(octokit);
 
 const main = async () => {
   const octokit = throttledOctokit();
-  const repo = commitRepository(octokit);
+  const commitRepo = commitRepository(octokit);
   await Promise.all([
     calculateMeanTimeToFirstCommit(
       "Mean Time to First Commit based on GitHub Onboarding Issues",
       gitHubIssueOnboarderRepository(octokit),
-      repo,
+      commitRepo,
     ),
     calculateMeanTimeToFirstCommit(
       "Mean Time to First Commit based on Roster",
       rosterMemberRepository(),
-      repo,
+      commitRepo,
     ),
   ]);
 };

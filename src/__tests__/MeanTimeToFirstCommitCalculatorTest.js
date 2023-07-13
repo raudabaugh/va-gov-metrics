@@ -2,6 +2,7 @@ const MeanTimeToFirstCommitCalculator = require("../MeanTimeToFirstCommitCalcula
 const GitHubIssueOnboarderRepository = require("../github/GitHubIssueOnboarderRepository");
 const CommitRepository = require("../commit/CommitRepository");
 const { createOnboarder } = require("./factories");
+const { createGitHubCommit } = require("../commit/__tests__/factories");
 
 jest.mock("../github/GitHubIssueOnboarderRepository");
 jest.mock("../commit/CommitRepository");
@@ -16,11 +17,11 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       gitHubIssueOnboarderRepository.findAll.mockResolvedValue([onboarder]);
 
       const commitRepository = new CommitRepository();
-      const commitDate1 = new Date("2023-07-01T00:00:00Z");
-      const commitDate2 = new Date("2023-07-02T00:00:00Z");
+      const vetsWebsiteFirstCommit = createGitHubCommit();
+      const vetsApiFirstCommit = createGitHubCommit();
       commitRepository.findFirstCommit
-        .mockResolvedValueOnce(commitDate1)
-        .mockResolvedValueOnce(commitDate2);
+        .mockResolvedValueOnce(vetsWebsiteFirstCommit)
+        .mockResolvedValueOnce(vetsApiFirstCommit);
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
@@ -32,8 +33,8 @@ describe("MeanTimeToFirstCommitCalculator", () => {
         await meanTimeToFirstCommitCalculator.calculate();
 
       expect(onboarder.daysToFirstCommit).toHaveBeenCalledWith([
-        commitDate1,
-        commitDate2,
+        vetsWebsiteFirstCommit,
+        vetsApiFirstCommit,
       ]);
       expect(meanTimeToFirstCommit).toEqual(3);
     });
