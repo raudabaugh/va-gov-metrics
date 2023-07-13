@@ -4,7 +4,7 @@ const {
   listCommitsForVetsApiMswRequestHandler,
 } = require("../../__tests__/helpers");
 const CommitRepository = require("../CommitRepository");
-const { createCommit, createGitHubCommit } = require("./factories");
+const { createCommitDto, createCommit } = require("./factories");
 const { createOnboarder } = require("../../__tests__/factories");
 
 describe("CommitRepository", () => {
@@ -16,14 +16,14 @@ describe("CommitRepository", () => {
     it("returns the first commit", async () => {
       const onboarder = createOnboarder();
       const commits = [
-        createCommit({
+        createCommitDto({
           commit: {
             author: {
               date: "2023-07-05T00:00:00Z",
             },
           },
         }),
-        createCommit({
+        createCommitDto({
           commit: {
             author: {
               date: "2023-07-04T00:00:00Z",
@@ -39,7 +39,7 @@ describe("CommitRepository", () => {
       );
 
       expect(firstCommit).toEqual(
-        createGitHubCommit({ date: new Date(commits[1].commit.author.date) }),
+        createCommit({ date: new Date(commits[1].commit.author.date) }),
       );
     });
 

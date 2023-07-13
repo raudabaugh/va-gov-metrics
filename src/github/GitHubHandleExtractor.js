@@ -1,25 +1,20 @@
 class GitHubHandleExtractor {
   NO_MATCH = -1;
 
-  extractFrom(onboardingIssue) {
-    const {
-      body,
-      user: { login },
-    } = onboardingIssue;
-
+  extract(body, submitter) {
     const gitHubHandleBeginRegex = /GitHub handle\*?:.*/;
     const gitHubHandleEndRegex = /\n/;
 
     const gitHubHandleBeginIndex = body.search(gitHubHandleBeginRegex);
     if (gitHubHandleBeginIndex === this.NO_MATCH) {
-      return login;
+      return submitter;
     }
 
     const gitHubHandleEndIndex = body
       .substring(gitHubHandleBeginIndex)
       .search(gitHubHandleEndRegex);
     if (gitHubHandleEndIndex === this.NO_MATCH) {
-      return login;
+      return submitter;
     }
 
     let gitHubHandle = body
@@ -29,7 +24,7 @@ class GitHubHandleExtractor {
       .trim();
 
     if (!gitHubHandle) {
-      return login;
+      return submitter;
     }
     // GitHub handle is a link like '[my-github-handle](https'
     if (gitHubHandle.startsWith("[")) {

@@ -1,6 +1,6 @@
-const GitHubCommit = require("../GitHubCommit");
+const Commit = require("../Commit");
 
-const createCommit = (attributes = {}) => ({
+const createCommitDto = (attributes = {}) => ({
   commit: {
     author: {
       date: "2023-07-04T00:00:00Z",
@@ -9,13 +9,13 @@ const createCommit = (attributes = {}) => ({
   ...attributes,
 });
 
-const createGitHubCommit = (attributes = {}) =>
-  new GitHubCommit({
+const createCommit = (attributes = {}) =>
+  new Commit({
     date: new Date("2023-07-04T00:00:00Z"),
     ...attributes,
   });
 
 module.exports = {
+  createCommitDto,
   createCommit,
-  createGitHubCommit,
 };

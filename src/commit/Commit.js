@@ -1,7 +1,7 @@
-class GitHubCommit {
+class Commit {
   constructor({ date }) {
     this.date = date;
   }
 }
 
-module.exports = GitHubCommit;
+module.exports = Commit;

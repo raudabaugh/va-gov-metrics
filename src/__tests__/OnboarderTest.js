@@ -1,14 +1,14 @@
-const { createGitHubCommit } = require("../commit/__tests__/factories");
+const { createCommit } = require("../commit/__tests__/factories");
 const { createOnboarder } = require("./factories");
 
 describe("Onboarder", () => {
   describe("daysToFirstCommit", () => {
     it("returns the first time to commit in days", () => {
       const possibleFirstCommits = [
-        createGitHubCommit({
+        createCommit({
           date: new Date("2023-07-04T00:00:00Z"),
         }),
-        createGitHubCommit({
+        createCommit({
           date: new Date("2023-07-05T00:00:00Z"),
         }),
       ];

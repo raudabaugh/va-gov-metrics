@@ -1,6 +1,6 @@
 const GitHubOnboardingIssue = require("../GitHubOnboardingIssue");
 
-const createOnboardingIssue = (attributes = {}) => ({
+const createGitHubOnboardingIssueDto = (attributes = {}) => ({
   title: "Platform Orientation Template",
   body: "GitHub handle*: octocat\n",
   created_at: "2023-07-01T00:00:00Z",
@@ -12,11 +12,11 @@ const createOnboardingIssue = (attributes = {}) => ({
 
 const createGitHubOnboardingIssue = (attributes = {}) =>
   new GitHubOnboardingIssue({
-    issue: createOnboardingIssue(),
+    issue: createGitHubOnboardingIssueDto(),
     ...attributes,
   });
 
 module.exports = {
-  createOnboardingIssue,
+  createGitHubOnboardingIssueDto,
   createGitHubOnboardingIssue,
 };

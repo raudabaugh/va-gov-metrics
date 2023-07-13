@@ -6,8 +6,10 @@ const {
   listCommitsForVetsApiMswRequestHandler,
 } = require("./helpers");
 const { createOnboarder } = require("./factories");
-const { createOnboardingIssue } = require("../github/__tests__/factories");
-const { createCommit } = require("../commit/__tests__/factories");
+const {
+  createGitHubOnboardingIssueDto,
+} = require("../github/__tests__/factories");
+const { createCommitDto } = require("../commit/__tests__/factories");
 
 jest.mock("../roster/roster.json", () => [
   {
@@ -21,25 +23,25 @@ describe("happy path", () => {
 
   describe("using the GitHub onboarding template issue as an onboarder source", () => {
     beforeEach(() => {
-      const onboardingIssue = createOnboardingIssue({
+      const onboardingIssueDto = createGitHubOnboardingIssueDto({
         body: "GitHub handle*: octocat\n",
         created_at: "2023-07-01T00:00:00Z",
       });
       const onboarder = createOnboarder({
         gitHubHandle: "octocat",
-        onboardingStart: new Date(onboardingIssue.created_at),
+        onboardingStart: new Date(onboardingIssueDto.created_at),
       });
       server.use(
-        listIssuesForRepoMswRequestHandler([onboardingIssue]),
+        listIssuesForRepoMswRequestHandler([onboardingIssueDto]),
         listCommitsForVetsWebsiteMswRequestHandler(onboarder, [
-          createCommit({
+          createCommitDto({
             commit: {
               author: {
                 date: "2023-07-05T00:00:00Z",
               },
             },
           }),
-          createCommit({
+          createCommitDto({
             commit: {
               author: {
                 date: "2023-07-04T00:00:00Z",
@@ -72,7 +74,7 @@ describe("happy path", () => {
         listIssuesForRepoMswRequestHandler([]),
         listCommitsForVetsWebsiteMswRequestHandler(onboarder, []),
         listCommitsForVetsApiMswRequestHandler(onboarder, [
-          createCommit({
+          createCommitDto({
             commit: {
               author: {
                 date: "2023-07-14T00:00:00Z",
