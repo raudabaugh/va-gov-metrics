@@ -5,7 +5,7 @@ class CommitRepository {
     this.octokit = octokit;
   }
 
-  async findFirstCommit(repo, { gitHubHandle, onboardingStart }) {
+  async findFirstBy(repo, { gitHubHandle, onboardingStart }) {
     const commits = await this.octokit.paginate(
       this.octokit.rest.repos.listCommits,
       {

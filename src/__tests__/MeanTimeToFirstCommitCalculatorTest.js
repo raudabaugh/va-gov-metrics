@@ -19,7 +19,7 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       const commitRepository = new CommitRepository();
       const vetsWebsiteFirstCommit = createGitHubCommit();
       const vetsApiFirstCommit = createGitHubCommit();
-      commitRepository.findFirstCommit
+      commitRepository.findFirstBy
         .mockResolvedValueOnce(vetsWebsiteFirstCommit)
         .mockResolvedValueOnce(vetsApiFirstCommit);
 
@@ -39,12 +39,15 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       expect(meanTimeToFirstCommit).toEqual(3);
     });
 
-    it("returns zero when there's no onboarders", async () => {
+    it("ignores repos that the onboarder has no committed to", async () => {
       const gitHubIssueOnboarderRepository =
         new GitHubIssueOnboarderRepository();
-      gitHubIssueOnboarderRepository.findAll.mockResolvedValue([]);
+      const onboarder = createOnboarder();
+      jest.spyOn(onboarder, "daysToFirstCommit").mockReturnValue(null);
+      gitHubIssueOnboarderRepository.findAll.mockResolvedValue([onboarder]);
 
       const commitRepository = new CommitRepository();
+      commitRepository.findFirstBy.mockResolvedValue(null);
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
@@ -55,6 +58,7 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       const meanTimeToFirstCommit =
         await meanTimeToFirstCommitCalculator.calculate();
 
+      expect(onboarder.daysToFirstCommit).toHaveBeenCalledWith([]);
       expect(meanTimeToFirstCommit).toEqual(0);
     });
 

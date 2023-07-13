@@ -25,7 +25,7 @@ describe("Onboarder", () => {
     it("returns null when no commits are found", () => {
       const onboarder = createOnboarder();
 
-      const possibleCommits = [null];
+      const possibleCommits = [];
       const daysToFirstCommit = onboarder.daysToFirstCommit(possibleCommits);
 
       expect(daysToFirstCommit).toBeNull();

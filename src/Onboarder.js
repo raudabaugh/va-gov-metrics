@@ -4,8 +4,7 @@ class Onboarder {
     this.onboardingStart = onboardingStart;
   }
 
-  daysToFirstCommit(possibleCommits) {
-    const commits = possibleCommits.filter((commit) => commit);
+  daysToFirstCommit(commits) {
     if (!commits.length) {
       return null;
     }

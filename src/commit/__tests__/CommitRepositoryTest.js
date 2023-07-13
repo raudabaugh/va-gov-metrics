@@ -10,7 +10,7 @@ const { createOnboarder } = require("../../__tests__/factories");
 describe("CommitRepository", () => {
   const server = setupMswServer();
 
-  describe("findFirstCommit", () => {
+  describe("findFirstBy", () => {
     const commitRepository = new CommitRepository(new Octokit());
 
     it("returns the first commit", async () => {
@@ -33,7 +33,7 @@ describe("CommitRepository", () => {
       ];
       server.use(listCommitsForVetsApiMswRequestHandler(onboarder, commits));
 
-      const firstCommit = await commitRepository.findFirstCommit(
+      const firstCommit = await commitRepository.findFirstBy(
         "vets-api",
         onboarder,
       );
@@ -47,7 +47,7 @@ describe("CommitRepository", () => {
       const onboarder = createOnboarder();
       server.use(listCommitsForVetsApiMswRequestHandler(onboarder, []));
 
-      const firstCommit = await commitRepository.findFirstCommit(
+      const firstCommit = await commitRepository.findFirstBy(
         "vets-api",
         onboarder,
       );

@@ -27,26 +27,24 @@ const throttledOctokit = () => {
   });
 };
 
-const gitHubIssueOnboarderRepository = (octokit) =>
-  new GitHubIssueOnboarderRepository(octokit);
-
-const rosterMemberRepository = () => new RosterMemberRepository();
-
-const commitRepository = (octokit) => new CommitRepository(octokit);
-
 const main = async () => {
   const octokit = throttledOctokit();
-  const commitRepo = commitRepository(octokit);
+  const gitHubIssueOnboarderRepository = new GitHubIssueOnboarderRepository(
+    octokit,
+  );
+  const rosterMemberRepository = new RosterMemberRepository();
+  const commitRepository = new CommitRepository(octokit);
+
   await Promise.all([
     calculateMeanTimeToFirstCommit(
       "Mean Time to First Commit based on GitHub Onboarding Issues",
-      gitHubIssueOnboarderRepository(octokit),
-      commitRepo,
+      gitHubIssueOnboarderRepository,
+      commitRepository,
     ),
     calculateMeanTimeToFirstCommit(
       "Mean Time to First Commit based on Roster",
-      rosterMemberRepository(),
-      commitRepo,
+      rosterMemberRepository,
+      commitRepository,
     ),
   ]);
 };
