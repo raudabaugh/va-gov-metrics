@@ -1,10 +1,10 @@
 const MeanTimeToFirstCommitCalculator = require("../MeanTimeToFirstCommitCalculator");
 const GitHubIssueOnboarderRepository = require("../github/GitHubIssueOnboarderRepository");
-const FirstCommitDateFinder = require("../commit/FirstCommitDateFinder");
+const CommitRepository = require("../commit/CommitRepository");
 const { createOnboarder } = require("./factories");
 
 jest.mock("../github/GitHubIssueOnboarderRepository");
-jest.mock("../commit/FirstCommitDateFinder");
+jest.mock("../commit/CommitRepository");
 
 describe("MeanTimeToFirstCommitCalculator", () => {
   describe("calculate", () => {
@@ -15,17 +15,17 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       jest.spyOn(onboarder, "daysToFirstCommit").mockReturnValue(3);
       gitHubIssueOnboarderRepository.findAll.mockResolvedValue([onboarder]);
 
-      const firstCommitDateFinder = new FirstCommitDateFinder();
+      const commitRepository = new CommitRepository();
       const commitDate1 = new Date("2023-07-01T00:00:00Z");
       const commitDate2 = new Date("2023-07-02T00:00:00Z");
-      firstCommitDateFinder.find
+      commitRepository.findFirstCommit
         .mockResolvedValueOnce(commitDate1)
         .mockResolvedValueOnce(commitDate2);
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           gitHubIssueOnboarderRepository,
-          firstCommitDateFinder,
+          commitRepository,
         );
 
       const meanTimeToFirstCommit =
@@ -43,12 +43,12 @@ describe("MeanTimeToFirstCommitCalculator", () => {
         new GitHubIssueOnboarderRepository();
       gitHubIssueOnboarderRepository.findAll.mockResolvedValue([]);
 
-      const firstCommitDateFinder = new FirstCommitDateFinder();
+      const commitRepository = new CommitRepository();
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           gitHubIssueOnboarderRepository,
-          firstCommitDateFinder,
+          commitRepository,
         );
 
       const meanTimeToFirstCommit =
@@ -69,12 +69,12 @@ describe("MeanTimeToFirstCommitCalculator", () => {
         onboarder2,
       ]);
 
-      const firstCommitDateFinder = new FirstCommitDateFinder();
+      const commitRepository = new CommitRepository();
 
       const meanTimeToFirstCommitCalculator =
         new MeanTimeToFirstCommitCalculator(
           gitHubIssueOnboarderRepository,
-          firstCommitDateFinder,
+          commitRepository,
         );
 
       const meanTimeToFirstCommit =

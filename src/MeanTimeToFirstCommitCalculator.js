@@ -1,7 +1,7 @@
 class MeanTimeToFirstCommitCalculator {
-  constructor(onboarderRepository, firstCommitDateFinder) {
+  constructor(onboarderRepository, commitRepository) {
     this.onboarderRepository = onboarderRepository;
-    this.firstCommitDateFinder = firstCommitDateFinder;
+    this.commitRepository = commitRepository;
   }
 
   async calculate() {
@@ -10,7 +10,7 @@ class MeanTimeToFirstCommitCalculator {
       onboarders.map(async (onboarder) => {
         const possibleFirstCommitDates = await Promise.all(
           ["vets-website", "vets-api"].map((repo) =>
-            this.firstCommitDateFinder.find(repo, onboarder),
+            this.commitRepository.findFirstCommit(repo, onboarder),
           ),
         );
 

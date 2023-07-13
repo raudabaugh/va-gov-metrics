@@ -3,15 +3,15 @@ const {
   setupMswServer,
   listCommitsForVetsApiMswRequestHandler,
 } = require("../../__tests__/helpers");
-const FirstCommitDateFinder = require("../FirstCommitDateFinder");
+const CommitRepository = require("../CommitRepository");
 const { createCommit } = require("./factories");
 const { createOnboarder } = require("../../__tests__/factories");
 
-describe("FirstCommitDateFinder", () => {
+describe("CommitRepository", () => {
   const server = setupMswServer();
 
-  describe("find", () => {
-    const firstCommitDateFinder = new FirstCommitDateFinder(new Octokit());
+  describe("findFirstCommit", () => {
+    const commitRepository = new CommitRepository(new Octokit());
 
     it("returns the oldest commit date", async () => {
       const onboarder = createOnboarder();
@@ -35,7 +35,7 @@ describe("FirstCommitDateFinder", () => {
         ]),
       );
 
-      const firstCommitDate = await firstCommitDateFinder.find(
+      const firstCommitDate = await commitRepository.findFirstCommit(
         "vets-api",
         onboarder,
       );
@@ -47,7 +47,7 @@ describe("FirstCommitDateFinder", () => {
       const onboarder = createOnboarder();
       server.use(listCommitsForVetsApiMswRequestHandler(onboarder, []));
 
-      const firstCommit = await firstCommitDateFinder.find(
+      const firstCommit = await commitRepository.findFirstCommit(
         "vets-api",
         onboarder,
       );

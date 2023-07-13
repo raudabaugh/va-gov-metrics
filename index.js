@@ -2,7 +2,7 @@ const { Octokit } = require("@octokit/rest");
 const { throttling } = require("@octokit/plugin-throttling");
 const GitHubIssueOnboarderRepository = require("./src/github/GitHubIssueOnboarderRepository");
 const RosterMemberRepository = require("./src/roster/RosterMemberRepository");
-const FirstCommitDateFinder = require("./src/commit/FirstCommitDateFinder");
+const CommitRepository = require("./src/commit/CommitRepository");
 const MeanTimeToFirstCommitCalculator = require("./src/MeanTimeToFirstCommitCalculator");
 
 const throttledOctokit = () => {
@@ -30,23 +30,23 @@ const throttledOctokit = () => {
 const gitHubIssueOnboarderRepository = (octokit) =>
   new GitHubIssueOnboarderRepository(octokit);
 
-const firstCommitDateFinder = (octokit) => new FirstCommitDateFinder(octokit);
-
 const rosterMemberRepository = () => new RosterMemberRepository();
+
+const commitRepository = (octokit) => new CommitRepository(octokit);
 
 const main = async () => {
   const octokit = throttledOctokit();
-  const commitDateFinder = firstCommitDateFinder(octokit);
+  const repo = commitRepository(octokit);
   await Promise.all([
     calculateMeanTimeToFirstCommit(
       "Mean Time to First Commit based on GitHub Onboarding Issues",
       gitHubIssueOnboarderRepository(octokit),
-      commitDateFinder,
+      repo,
     ),
     calculateMeanTimeToFirstCommit(
       "Mean Time to First Commit based on Roster",
       rosterMemberRepository(),
-      commitDateFinder,
+      repo,
     ),
   ]);
 };
@@ -54,11 +54,11 @@ const main = async () => {
 const calculateMeanTimeToFirstCommit = async (
   label,
   onboarderRepository,
-  firstCommitFinder,
+  commitRepository,
 ) => {
   const meanTimeToFirstCommitCalculator = new MeanTimeToFirstCommitCalculator(
     onboarderRepository,
-    firstCommitFinder,
+    commitRepository,
   );
 
   const meanTimeToFirstCommit =

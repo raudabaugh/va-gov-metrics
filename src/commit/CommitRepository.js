@@ -1,9 +1,9 @@
-class FirstCommitDateFinder {
+class CommitRepository {
   constructor(octokit) {
     this.octokit = octokit;
   }
 
-  async find(repo, { gitHubHandle, onboardingStart }) {
+  async findFirstCommit(repo, { gitHubHandle, onboardingStart }) {
     const commits = await this.octokit.paginate(
       this.octokit.rest.repos.listCommits,
       {
@@ -19,4 +19,4 @@ class FirstCommitDateFinder {
   }
 }
 
-module.exports = FirstCommitDateFinder;
+module.exports = CommitRepository;
