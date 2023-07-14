@@ -30,6 +30,7 @@ jobs:
         run: |
           git config --global user.name "MTTFC Job"
           git config --global user.email "mttfc-job@va.gov"
+          git config --global commit.gpgsign true
           git add mttfc-report.csv
           git commit -m "Update MTTFC Report"
           git push
