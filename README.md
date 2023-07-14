@@ -19,6 +19,8 @@
 
 The `MeanTimeToFirstCommitCalculator` calcuates the mean time it takes for someone onboarding to VA.gov to make their first commit, also known as the "Mean Time to First Commit" (MTTFC).
 
+This metric is collected by a scheduled [GitHub Action pipeline](./.github/workflows/mttfc.yml), and the results are committed to [mttfc-report.csv](./mttfc-report.csv).
+
 ### Methodology
 
 Each run of the calculator produces two calculations of the MTTFC. The reason for this is that there are currently two distinct sources of onboarder data:
