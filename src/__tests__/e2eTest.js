@@ -59,7 +59,7 @@ describe("happy path", () => {
       await main();
 
       expect(consoleSpy).toHaveBeenCalledWith(
-        "Mean Time to First Commit based on GitHub Onboarding Issues: 3.00 days",
+        "Mean Time to First Commit based on GitHub Onboarding Issues (days): 3.00",
       );
     });
   });
@@ -91,7 +91,7 @@ describe("happy path", () => {
       await main();
 
       expect(consoleSpy).toHaveBeenCalledWith(
-        "Mean Time to First Commit based on Roster: 13.00 days",
+        "Mean Time to First Commit based on Roster (days): 13.00",
       );
     });
   });

@@ -37,12 +37,12 @@ const main = async () => {
 
   await Promise.all([
     calculateMeanTimeToFirstCommit(
-      "Mean Time to First Commit based on GitHub Onboarding Issues",
+      "Mean Time to First Commit based on GitHub Onboarding Issues (days)",
       gitHubIssueOnboarderRepository,
       commitRepository,
     ),
     calculateMeanTimeToFirstCommit(
-      "Mean Time to First Commit based on Roster",
+      "Mean Time to First Commit based on Roster (days)",
       rosterMemberRepository,
       commitRepository,
     ),
@@ -61,7 +61,7 @@ const calculateMeanTimeToFirstCommit = async (
 
   const meanTimeToFirstCommit =
     await meanTimeToFirstCommitCalculator.calculate();
-  console.log(`${label}: ${meanTimeToFirstCommit.toFixed(2)} days`);
+  console.log(`${label}: ${meanTimeToFirstCommit.toFixed(2)}`);
 };
 
 if (require.main === module) {

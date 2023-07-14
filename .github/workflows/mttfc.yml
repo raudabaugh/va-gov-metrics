@@ -25,7 +25,10 @@ jobs:
         run: |
           # npm start > results.txt
           # cat results.txt | grep Mean >> mttfc-report.csv
-          echo -n 'Mean Time to First Commit based on Roster: 104.24 days' | grep Mean >> mttfc-report.csv
+          echo -n 'Mean Time to First Commit based on Roster: 104.24 days' \
+          | grep Mean \
+          | sed "s/$/: $(date)/" \
+          | sed 's/: /,/g' >> mttfc-report.csv
       - name: Update Report
         run: |
           git config --global user.name "github-actions"
