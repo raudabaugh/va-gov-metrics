@@ -22,4 +22,11 @@ jobs:
       - name: Collect MTTFC
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm start
+        run: |
+          npm start > results.txt
+          cat results.txt | grep Mean >> mttfc-report.csv
+      - name: Update Report
+        run: |
+          git add mttfc-report.csv
+          git commit -m "Update MTTFC Report"
+          git push
