@@ -30,7 +30,6 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git config --global commit.gpgsign true
           git add mttfc-report.csv
           git commit -m "Update MTTFC Report"
           git push
