@@ -23,16 +23,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # npm start > results.txt
-          # cat results.txt | grep Mean >> mttfc-report.csv
-          echo -n 'Mean Time to First Commit based on Roster: 104.24 days' \
+          npm start \
           | grep Mean \
           | sed "s/$/: $(date)/" \
           | sed 's/: /,/g' >> mttfc-report.csv
       - name: Update Report
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name "MTTFC Job"
+          git config --global user.email "mttfc-job@va.gov"
           git add mttfc-report.csv
           git commit -m "Update MTTFC Report"
           git push
