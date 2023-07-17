@@ -12,7 +12,7 @@ export const setupMswServer = () => {
   return server;
 };
 
-export const listIssuesForRepoMswRequestHandler = (json) =>
+export const listIssuesForVaGovTeam = (json) =>
   rest.get(vaGitHubApiUrl("/va.gov-team/issues"), (req, res, ctx) =>
     res(
       ctx.json(
@@ -24,14 +24,14 @@ export const listIssuesForRepoMswRequestHandler = (json) =>
     ),
   );
 
-export const listCommitsForVetsWebsiteMswRequestHandler = (onboarder, json) =>
+export const listCommitsForVetsWebsite = (onboarder, json) =>
   vaGitHubListCommitsApiMswRequestHandler(
     "/vets-website/commits",
     onboarder,
     json,
   );
 
-export const listCommitsForVetsApiMswRequestHandler = (onboarder, json) =>
+export const listCommitsForVetsApi = (onboarder, json) =>
   vaGitHubListCommitsApiMswRequestHandler("/vets-api/commits", onboarder, json);
 
 const vaGitHubListCommitsApiMswRequestHandler = (

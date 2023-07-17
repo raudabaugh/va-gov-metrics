@@ -11,7 +11,7 @@ export default class Onboarder {
 
     const firstCommitDate = commits
       .map(({ date }) => date)
-      .reduce((acc, date) => (acc < date ? acc : date));
+      .reduce((min, date) => (min < date ? min : date));
     const firstCommitDiffInMillis = firstCommitDate - this.onboardingStart;
     const firstCommitDiffInDays = firstCommitDiffInMillis / 1000 / 60 / 60 / 24;
     return firstCommitDiffInDays;

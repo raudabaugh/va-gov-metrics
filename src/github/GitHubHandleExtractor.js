@@ -26,7 +26,7 @@ export default class GitHubHandleExtractor {
     if (!gitHubHandle) {
       return submitter;
     }
-    // GitHub handle is a link like '[my-github-handle](https'
+    // GitHub handle is a link like '[my-GitHub-handle](https'
     if (gitHubHandle.startsWith("[")) {
       gitHubHandle = gitHubHandle.split("[")[1].split("]")[0];
     }

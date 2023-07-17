@@ -24,7 +24,7 @@ export default class MeanTimeToFirstCommitCalculator {
     }
 
     const meanTimeToFirstCommit =
-      daysToFirstCommit.reduce((acc, days) => acc + days) /
+      daysToFirstCommit.reduce((total, days) => total + days) /
       daysToFirstCommit.length;
 
     return meanTimeToFirstCommit;

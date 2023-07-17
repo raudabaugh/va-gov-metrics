@@ -1,4 +1,4 @@
-import Onboarder from "../Onboarder.js";
+import Onboarder from "./Onboarder.js";
 
 export const createOnboarder = (attributes = {}) =>
   new Onboarder({

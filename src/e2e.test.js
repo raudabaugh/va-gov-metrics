@@ -1,22 +1,22 @@
 import { describe, it, beforeEach } from "node:test";
 import { mock } from "node:test";
 import { strict as assert } from "node:assert";
-import { main } from "../../index.js";
+import { main } from "../index.js";
 import {
   setupMswServer,
-  listIssuesForRepoMswRequestHandler,
-  listCommitsForVetsWebsiteMswRequestHandler,
-  listCommitsForVetsApiMswRequestHandler,
-} from "./helpers.js";
-import { createOnboarder } from "./factories.js";
-import { createGitHubOnboardingIssueDto } from "../github/__tests__/factories.js";
-import { createCommitDto } from "../commit/__tests__/factories.js";
-import { createRosterMemberDto } from "../roster/__tests__/factories.js";
+  listIssuesForVaGovTeam,
+  listCommitsForVetsWebsite,
+  listCommitsForVetsApi,
+} from "./test-msw-helpers.js";
+import { createOnboarder } from "./test-factories.js";
+import { createGitHubOnboardingIssueDto } from "./github/test-factories.js";
+import { createCommitDto } from "./commit/test-factories.js";
+import { createRosterMemberDto } from "./roster/test-factories.js";
 
 describe("happy path", () => {
   const server = setupMswServer();
 
-  describe("using the GitHub onboarding template issue as an onboarder source", () => {
+  describe("using GitHub onboarding issues as an onboarder source", () => {
     beforeEach(() => {
       const gitHubOnboardingIssueDto = createGitHubOnboardingIssueDto({
         body: "GitHub handle*: octocat\n",
@@ -27,8 +27,8 @@ describe("happy path", () => {
         onboardingStart: new Date(gitHubOnboardingIssueDto.created_at),
       });
       server.use(
-        listIssuesForRepoMswRequestHandler([gitHubOnboardingIssueDto]),
-        listCommitsForVetsWebsiteMswRequestHandler(onboarder, [
+        listIssuesForVaGovTeam([gitHubOnboardingIssueDto]),
+        listCommitsForVetsWebsite(onboarder, [
           createCommitDto({
             commit: {
               author: {
@@ -44,19 +44,18 @@ describe("happy path", () => {
             },
           }),
         ]),
-        listCommitsForVetsApiMswRequestHandler(onboarder, []),
+        listCommitsForVetsApi(onboarder, []),
       );
     });
 
     it("logs the mean time to first commit", async () => {
-      const consoleSpy = mock.method(console, "log");
+      const consoleLogMock = mock.method(console, "log");
       const roster = [];
 
       await main(roster);
 
-      assert.notEqual(consoleSpy.mock.callCount(), 0);
       assert.ok(
-        consoleSpy.mock.calls.some((call) =>
+        consoleLogMock.mock.calls.some((call) =>
           call.arguments.includes(
             "Mean Time to First Commit based on GitHub Onboarding Issues (days): 3.00",
           ),
@@ -65,7 +64,7 @@ describe("happy path", () => {
     });
   });
 
-  describe("using the roster as an onboarder source", () => {
+  describe("using a hard-coded roster as an onboarder source", () => {
     const roster = [
       createRosterMemberDto({
         gitHubHandle: "some-other-user",
@@ -75,13 +74,13 @@ describe("happy path", () => {
 
     beforeEach(() => {
       const onboarder = createOnboarder({
-        gitHubHandle: "some-other-user",
-        onboardingStart: new Date("2023-07-01T00:00:00Z"),
+        gitHubHandle: roster[0].gitHubHandle,
+        onboardingStart: new Date(roster[0].onboardingStart),
       });
       server.use(
-        listIssuesForRepoMswRequestHandler([]),
-        listCommitsForVetsWebsiteMswRequestHandler(onboarder, []),
-        listCommitsForVetsApiMswRequestHandler(onboarder, [
+        listIssuesForVaGovTeam([]),
+        listCommitsForVetsWebsite(onboarder, []),
+        listCommitsForVetsApi(onboarder, [
           createCommitDto({
             commit: {
               author: {
@@ -94,13 +93,12 @@ describe("happy path", () => {
     });
 
     it("logs the mean time to first commit", async () => {
-      const consoleSpy = mock.method(console, "log");
+      const consoleLogMock = mock.method(console, "log");
 
       await main(roster);
 
-      assert.notEqual(consoleSpy.mock.callCount(), 0);
       assert.ok(
-        consoleSpy.mock.calls.some((call) =>
+        consoleLogMock.mock.calls.some((call) =>
           call.arguments.includes(
             "Mean Time to First Commit based on Roster (days): 13.00",
           ),

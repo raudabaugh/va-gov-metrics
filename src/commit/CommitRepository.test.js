@@ -1,13 +1,10 @@
 import { describe, it } from "node:test";
 import { strict as assert } from "node:assert";
 import { Octokit } from "@octokit/rest";
-import {
-  setupMswServer,
-  listCommitsForVetsApiMswRequestHandler,
-} from "../../__tests__/helpers.js";
-import CommitRepository from "../CommitRepository.js";
-import { createCommitDto, createCommit } from "./factories.js";
-import { createOnboarder } from "../../__tests__/factories.js";
+import { setupMswServer, listCommitsForVetsApi } from "../test-msw-helpers.js";
+import CommitRepository from "./CommitRepository.js";
+import { createCommitDto, createCommit } from "./test-factories.js";
+import { createOnboarder } from "../test-factories.js";
 
 describe("CommitRepository", () => {
   const server = setupMswServer();
@@ -15,7 +12,7 @@ describe("CommitRepository", () => {
   describe("findFirstBy", () => {
     const commitRepository = new CommitRepository(new Octokit());
 
-    it("returns the first commit", async () => {
+    it("returns the first commit for an oboarder in a repo", async () => {
       const onboarder = createOnboarder();
       const commits = [
         createCommitDto({
@@ -33,7 +30,7 @@ describe("CommitRepository", () => {
           },
         }),
       ];
-      server.use(listCommitsForVetsApiMswRequestHandler(onboarder, commits));
+      server.use(listCommitsForVetsApi(onboarder, commits));
 
       const firstCommit = await commitRepository.findFirstBy(
         "vets-api",
@@ -46,9 +43,9 @@ describe("CommitRepository", () => {
       );
     });
 
-    it("returns null when there is no first commit", async () => {
+    it("returns null when the onboarder has no commits in the repo", async () => {
       const onboarder = createOnboarder();
-      server.use(listCommitsForVetsApiMswRequestHandler(onboarder, []));
+      server.use(listCommitsForVetsApi(onboarder, []));
 
       const firstCommit = await commitRepository.findFirstBy(
         "vets-api",

@@ -1,7 +1,7 @@
 import { describe, it } from "node:test";
 import { strict as assert } from "node:assert";
-import { createCommit } from "../commit/__tests__/factories.js";
-import { createOnboarder } from "./factories.js";
+import { createCommit } from "./commit/test-factories.js";
+import { createOnboarder } from "./test-factories.js";
 
 describe("Onboarder", () => {
   describe("daysToFirstCommit", () => {
