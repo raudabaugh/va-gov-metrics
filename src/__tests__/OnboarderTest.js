@@ -1,3 +1,5 @@
+const { mock } = require("node:test");
+const assert = require("node:assert").strict;
 const { createCommit } = require("../commit/__tests__/factories");
 const { createOnboarder } = require("./factories");
 
@@ -19,7 +21,7 @@ describe("Onboarder", () => {
       const daysToFirstCommit =
         onboarder.daysToFirstCommit(possibleFirstCommits);
 
-      expect(daysToFirstCommit).toEqual(3);
+      assert.equal(daysToFirstCommit, 3);
     });
 
     it("returns null when no commits are found", () => {
@@ -28,7 +30,7 @@ describe("Onboarder", () => {
 
       const daysToFirstCommit = onboarder.daysToFirstCommit(possibleCommits);
 
-      expect(daysToFirstCommit).toBeNull();
+      assert.equal(daysToFirstCommit, null);
     });
   });
 });

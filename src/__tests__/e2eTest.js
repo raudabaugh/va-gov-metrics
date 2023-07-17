@@ -1,3 +1,5 @@
+const { mock } = require("node:test");
+const assert = require("node:assert").strict;
 const main = require("../../index");
 const {
   setupMswServer,
@@ -54,12 +56,17 @@ describe("happy path", () => {
     });
 
     it("logs the mean time to first commit", async () => {
-      const consoleSpy = jest.spyOn(console, "log");
+      const consoleSpy = mock.method(console, "log");
 
       await main();
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Mean Time to First Commit based on GitHub Onboarding Issues (days): 3.00",
+      assert.notEqual(consoleSpy.mock.callCount(), 0);
+      assert.ok(
+        consoleSpy.mock.calls.some((call) =>
+          call.arguments.includes(
+            "Mean Time to First Commit based on GitHub Onboarding Issues (days): 3.00",
+          ),
+        ),
       );
     });
   });
@@ -86,12 +93,17 @@ describe("happy path", () => {
     });
 
     it("logs the mean time to first commit", async () => {
-      const consoleSpy = jest.spyOn(console, "log");
+      const consoleSpy = mock.method(console, "log");
 
       await main();
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Mean Time to First Commit based on Roster (days): 13.00",
+      assert.notEqual(consoleSpy.mock.callCount(), 0);
+      assert.ok(
+        consoleSpy.mock.calls.some((call) =>
+          call.arguments.includes(
+            "Mean Time to First Commit based on Roster (days): 13.00",
+          ),
+        ),
       );
     });
   });

@@ -1,3 +1,4 @@
+const assert = require("node:assert").strict;
 const GitHubIssueOnboarderRepository = require("../GitHubIssueOnboarderRepository");
 const { createOnboarder } = require("../../__tests__/factories");
 const { createGitHubOnboardingIssueDto } = require("./factories");
@@ -23,7 +24,7 @@ describe("GitHubIssueOnboarderRepository", () => {
 
       const onboarders = await gitHubIssueOnboarderRepository.findAll();
 
-      expect(onboarders).toEqual([
+      assert.deepEqual(onboarders, [
         createOnboarder({
           gitHubHandle: "octocat",
           onboardingStart: new Date(gitHubOnboardingIssueDto.created_at),
@@ -45,7 +46,7 @@ describe("GitHubIssueOnboarderRepository", () => {
 
       const actual = await gitHubIssueOnboarderRepository.findAll();
 
-      expect(actual).toEqual([]);
+      assert.deepEqual(actual, []);
     });
   });
 });

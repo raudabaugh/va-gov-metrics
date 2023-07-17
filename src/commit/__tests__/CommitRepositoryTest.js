@@ -1,3 +1,4 @@
+const assert = require("node:assert").strict;
 const { Octokit } = require("@octokit/rest");
 const {
   setupMswServer,
@@ -38,9 +39,7 @@ describe("CommitRepository", () => {
         onboarder,
       );
 
-      expect(firstCommit).toEqual(
-        createCommit({ date: new Date(commits[1].commit.author.date) }),
-      );
+      assert.deepEqual(firstCommit, createCommit({ date: new Date(commits[1].commit.author.date) }));
     });
 
     it("returns null when there is no first commit", async () => {
@@ -52,7 +51,7 @@ describe("CommitRepository", () => {
         onboarder,
       );
 
-      expect(firstCommit).toBeNull();
+      assert.equal(firstCommit, null);
     });
   });
 });

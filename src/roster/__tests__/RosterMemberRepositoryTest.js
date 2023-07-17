@@ -1,3 +1,4 @@
+const assert = require("node:assert").strict;
 const RosterMemberRepository = require("../RosterMemberRepository");
 const { createOnboarder } = require("../../__tests__/factories");
 
@@ -15,10 +16,12 @@ describe("RosterMemberRepository", () => {
 
       const onboarders = await rosterMemberRepository.findAll();
 
-      expect(onboarders).toEqual([createOnboarder({
-        gitHubHandle: "octocat",
-        onboardingStart: new Date("2023-07-01T00:00:00Z"),
-      })]);
+      assert.deepEqual(onboarders, [
+        createOnboarder({
+          gitHubHandle: "octocat",
+          onboardingStart: new Date("2023-07-01T00:00:00Z"),
+        }),
+      ]);
     });
   });
 });

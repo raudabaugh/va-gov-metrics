@@ -1,3 +1,4 @@
+const assert = require("node:assert").strict;
 const GitHubHandleExtractor = require("../GitHubHandleExtractor");
 
 describe("GitHubHandleExtractor", () => {
@@ -10,7 +11,7 @@ describe("GitHubHandleExtractor", () => {
 
       const gitHubHandle = gitHubHandleExtractor.extract(body, submitter);
 
-      expect(gitHubHandle).toBe("octocat");
+      assert.equal(gitHubHandle, "octocat");
     });
 
     it("returns the onboarding template issue submitter's handle when there's no github handle to extract", () => {
@@ -19,7 +20,7 @@ describe("GitHubHandleExtractor", () => {
 
       const gitHubHandle = gitHubHandleExtractor.extract(body, submitter);
 
-      expect(gitHubHandle).toBe("some-login");
+      assert.equal(gitHubHandle, "some-login");
     });
 
     it("returns the onboarding template issue submitter's handle when the github handle is not terminated with newline", () => {
@@ -28,7 +29,7 @@ describe("GitHubHandleExtractor", () => {
 
       const gitHubHandle = gitHubHandleExtractor.extract(body, submitter);
 
-      expect(gitHubHandle).toBe("some-login");
+      assert.equal(gitHubHandle, "some-login");
     });
 
     it("returns the onboarding template issue submitter's handle when the github handle is undefined", () => {
@@ -37,7 +38,7 @@ describe("GitHubHandleExtractor", () => {
 
       const gitHubHandle = gitHubHandleExtractor.extract(body, submitter);
 
-      expect(gitHubHandle).toBe("some-login");
+      assert.equal(gitHubHandle, "some-login");
     });
 
     it("extracts a github handle when the github handle is a link", () => {
@@ -46,7 +47,7 @@ describe("GitHubHandleExtractor", () => {
 
       const gitHubHandle = gitHubHandleExtractor.extract(body, submitter);
 
-      expect(gitHubHandle).toBe("octocat");
+      assert.equal(gitHubHandle, "octocat");
     });
 
     it("removes a leading @ sign from the github handle", () => {
@@ -55,7 +56,7 @@ describe("GitHubHandleExtractor", () => {
 
       const gitHubHandle = gitHubHandleExtractor.extract(body, submitter);
 
-      expect(gitHubHandle).toBe("octocat");
+      assert.equal(gitHubHandle, "octocat");
     });
   });
 });
