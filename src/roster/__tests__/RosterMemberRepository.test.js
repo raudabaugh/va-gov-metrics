@@ -1,18 +1,19 @@
+const { describe, it } = require("node:test");
 const assert = require("node:assert").strict;
 const RosterMemberRepository = require("../RosterMemberRepository");
 const { createOnboarder } = require("../../__tests__/factories");
-
-jest.mock("../roster.json", () => [
-  {
-    gitHubHandle: "octocat",
-    onboardingStart: "2023-07-01T00:00:00Z",
-  },
-]);
+const { createRosterMemberDto } = require("./factories");
 
 describe("RosterMemberRepository", () => {
   describe("findAll", () => {
     it("returns onboarders created from the roster JSON file", async () => {
-      const rosterMemberRepository = new RosterMemberRepository();
+      const roster = [
+        createRosterMemberDto({
+          gitHubHandle: "octocat",
+          onboardingStart: "2023-07-01T00:00:00Z",
+        }),
+      ];
+      const rosterMemberRepository = new RosterMemberRepository(roster);
 
       const onboarders = await rosterMemberRepository.findAll();
 

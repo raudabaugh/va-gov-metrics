@@ -1,3 +1,4 @@
+const { describe, it } = require("node:test");
 const assert = require("node:assert").strict;
 const GitHubIssueOnboarderRepository = require("../GitHubIssueOnboarderRepository");
 const { createOnboarder } = require("../../__tests__/factories");

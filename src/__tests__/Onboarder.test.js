@@ -1,4 +1,4 @@
-const { mock } = require("node:test");
+const { describe, it } = require("node:test");
 const assert = require("node:assert").strict;
 const { createCommit } = require("../commit/__tests__/factories");
 const { createOnboarder } = require("./factories");

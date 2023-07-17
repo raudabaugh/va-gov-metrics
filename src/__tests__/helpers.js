@@ -1,12 +1,13 @@
+const { before, afterEach, after } = require("node:test");
 const { setupServer } = require("msw/node");
 const { rest } = require("msw");
 
 const setupMswServer = () => {
   const server = setupServer();
 
-  beforeAll(() => server.listen());
+  before(() => server.listen());
   afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
+  after(() => server.close());
 
   return server;
 };

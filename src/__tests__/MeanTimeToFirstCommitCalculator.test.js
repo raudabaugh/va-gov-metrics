@@ -1,4 +1,4 @@
-const { mock } = require("node:test");
+const { describe, it, mock } = require("node:test");
 const assert = require("node:assert").strict;
 const MeanTimeToFirstCommitCalculator = require("../MeanTimeToFirstCommitCalculator");
 const GitHubIssueOnboarderRepository = require("../github/GitHubIssueOnboarderRepository");
@@ -63,8 +63,11 @@ describe("MeanTimeToFirstCommitCalculator", () => {
         await meanTimeToFirstCommitCalculator.calculate();
 
       assert.equal(onboarder.daysToFirstCommit.mock.calls.length, 1);
-      assert.deepEqual(onboarder.daysToFirstCommit.mock.calls[0].arguments[0], []);
-      assert.equal(meanTimeToFirstCommit, 0)
+      assert.deepEqual(
+        onboarder.daysToFirstCommit.mock.calls[0].arguments[0],
+        [],
+      );
+      assert.equal(meanTimeToFirstCommit, 0);
     });
 
     it("ignores onboarders without a commit", async () => {
@@ -73,7 +76,10 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       mock.method(onboarder1, "daysToFirstCommit", () => 3);
       const onboarder2 = createOnboarder();
       mock.method(onboarder2, "daysToFirstCommit", () => null);
-      mock.method(onboarderRepository, "findAll", () => [onboarder1, onboarder2]);
+      mock.method(onboarderRepository, "findAll", () => [
+        onboarder1,
+        onboarder2,
+      ]);
 
       const commitRepository = new CommitRepository();
       mock.method(commitRepository, "findFirstBy", () => [createCommit()]);
@@ -87,7 +93,7 @@ describe("MeanTimeToFirstCommitCalculator", () => {
       const meanTimeToFirstCommit =
         await meanTimeToFirstCommitCalculator.calculate();
 
-      assert.equal(meanTimeToFirstCommit, 3)
+      assert.equal(meanTimeToFirstCommit, 3);
     });
   });
 });

@@ -1,3 +1,4 @@
+const { describe, it } = require("node:test");
 const assert = require("node:assert").strict;
 const { Octokit } = require("@octokit/rest");
 const {

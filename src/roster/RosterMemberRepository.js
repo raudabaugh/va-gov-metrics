@@ -1,9 +1,12 @@
-const roster = require("./roster.json");
 const Onboarder = require("../Onboarder");
 
 class RosterMemberRepository {
+  constructor(roster) {
+    this.roster = roster;
+  }
+
   async findAll() {
-    return roster.map(
+    return this.roster.map(
       ({ gitHubHandle, onboardingStart }) =>
         new Onboarder({
           gitHubHandle: gitHubHandle,

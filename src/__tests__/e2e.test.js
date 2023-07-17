@@ -1,3 +1,4 @@
+const { describe, it, beforeEach } = require("node:test");
 const { mock } = require("node:test");
 const assert = require("node:assert").strict;
 const main = require("../../index");
@@ -12,13 +13,7 @@ const {
   createGitHubOnboardingIssueDto,
 } = require("../github/__tests__/factories");
 const { createCommitDto } = require("../commit/__tests__/factories");
-
-jest.mock("../roster/roster.json", () => [
-  {
-    gitHubHandle: "some-other-user",
-    onboardingStart: "2023-07-01T00:00:00Z",
-  },
-]);
+const { createRosterMemberDto } = require("../roster/__tests__/factories");
 
 describe("happy path", () => {
   const server = setupMswServer();
@@ -57,8 +52,9 @@ describe("happy path", () => {
 
     it("logs the mean time to first commit", async () => {
       const consoleSpy = mock.method(console, "log");
+      const roster = [];
 
-      await main();
+      await main(roster);
 
       assert.notEqual(consoleSpy.mock.callCount(), 0);
       assert.ok(
@@ -72,6 +68,13 @@ describe("happy path", () => {
   });
 
   describe("using the roster as an onboarder source", () => {
+    const roster = [
+      createRosterMemberDto({
+        gitHubHandle: "some-other-user",
+        onboardingStart: "2023-07-01T00:00:00Z",
+      }),
+    ];
+
     beforeEach(() => {
       const onboarder = createOnboarder({
         gitHubHandle: "some-other-user",
@@ -95,7 +98,7 @@ describe("happy path", () => {
     it("logs the mean time to first commit", async () => {
       const consoleSpy = mock.method(console, "log");
 
-      await main();
+      await main(roster);
 
       assert.notEqual(consoleSpy.mock.callCount(), 0);
       assert.ok(

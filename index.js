@@ -4,6 +4,7 @@ const GitHubIssueOnboarderRepository = require("./src/github/GitHubIssueOnboarde
 const RosterMemberRepository = require("./src/roster/RosterMemberRepository");
 const CommitRepository = require("./src/commit/CommitRepository");
 const MeanTimeToFirstCommitCalculator = require("./src/MeanTimeToFirstCommitCalculator");
+const defaultRoster = require("./src/roster/roster.json");
 
 const throttledOctokit = () => {
   const ThrottledOctokit = Octokit.plugin(throttling);
@@ -27,12 +28,12 @@ const throttledOctokit = () => {
   });
 };
 
-const main = async () => {
+const main = async (roster = defaultRoster) => {
   const octokit = throttledOctokit();
   const gitHubIssueOnboarderRepository = new GitHubIssueOnboarderRepository(
     octokit,
   );
-  const rosterMemberRepository = new RosterMemberRepository();
+  const rosterMemberRepository = new RosterMemberRepository(roster);
   const commitRepository = new CommitRepository(octokit);
 
   await Promise.all([
