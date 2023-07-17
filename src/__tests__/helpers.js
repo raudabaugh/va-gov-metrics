@@ -1,8 +1,8 @@
-const { before, afterEach, after } = require("node:test");
-const { setupServer } = require("msw/node");
-const { rest } = require("msw");
+import { before, afterEach, after } from "node:test";
+import { setupServer } from "msw/node";
+import { rest } from "msw";
 
-const setupMswServer = () => {
+export const setupMswServer = () => {
   const server = setupServer();
 
   before(() => server.listen());
@@ -12,7 +12,7 @@ const setupMswServer = () => {
   return server;
 };
 
-const listIssuesForRepoMswRequestHandler = (json) =>
+export const listIssuesForRepoMswRequestHandler = (json) =>
   rest.get(vaGitHubApiUrl("/va.gov-team/issues"), (req, res, ctx) =>
     res(
       ctx.json(
@@ -24,14 +24,14 @@ const listIssuesForRepoMswRequestHandler = (json) =>
     ),
   );
 
-const listCommitsForVetsWebsiteMswRequestHandler = (onboarder, json) =>
+export const listCommitsForVetsWebsiteMswRequestHandler = (onboarder, json) =>
   vaGitHubListCommitsApiMswRequestHandler(
     "/vets-website/commits",
     onboarder,
     json,
   );
 
-const listCommitsForVetsApiMswRequestHandler = (onboarder, json) =>
+export const listCommitsForVetsApiMswRequestHandler = (onboarder, json) =>
   vaGitHubListCommitsApiMswRequestHandler("/vets-api/commits", onboarder, json);
 
 const vaGitHubListCommitsApiMswRequestHandler = (
@@ -52,10 +52,3 @@ const vaGitHubListCommitsApiMswRequestHandler = (
 
 const vaGitHubApiUrl = (path) =>
   `https://api.github.com/repos/department-of-veterans-affairs${path}`;
-
-module.exports = {
-  setupMswServer,
-  listIssuesForRepoMswRequestHandler,
-  listCommitsForVetsWebsiteMswRequestHandler,
-  listCommitsForVetsApiMswRequestHandler,
-};

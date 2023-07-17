@@ -1,8 +1,8 @@
-const { describe, it } = require("node:test");
-const assert = require("node:assert").strict;
-const RosterMemberRepository = require("../RosterMemberRepository");
-const { createOnboarder } = require("../../__tests__/factories");
-const { createRosterMemberDto } = require("./factories");
+import { describe, it } from "node:test";
+import { strict as assert } from "node:assert";
+import RosterMemberRepository from "../RosterMemberRepository.js";
+import { createOnboarder } from "../../__tests__/factories.js";
+import { createRosterMemberDto } from "./factories.js";
 
 describe("RosterMemberRepository", () => {
   describe("findAll", () => {

@@ -1,7 +1,7 @@
-const { describe, it } = require("node:test");
-const assert = require("node:assert").strict;
-const { createCommit } = require("../commit/__tests__/factories");
-const { createOnboarder } = require("./factories");
+import { describe, it } from "node:test";
+import { strict as assert } from "node:assert";
+import { createCommit } from "../commit/__tests__/factories.js";
+import { createOnboarder } from "./factories.js";
 
 describe("Onboarder", () => {
   describe("daysToFirstCommit", () => {

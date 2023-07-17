@@ -1,10 +1,10 @@
-const { describe, it, mock } = require("node:test");
-const assert = require("node:assert").strict;
-const MeanTimeToFirstCommitCalculator = require("../MeanTimeToFirstCommitCalculator");
-const GitHubIssueOnboarderRepository = require("../github/GitHubIssueOnboarderRepository");
-const CommitRepository = require("../commit/CommitRepository");
-const { createOnboarder } = require("./factories");
-const { createCommit } = require("../commit/__tests__/factories");
+import { describe, it, mock } from "node:test";
+import { strict as assert } from "node:assert";
+import MeanTimeToFirstCommitCalculator from "../MeanTimeToFirstCommitCalculator.js";
+import GitHubIssueOnboarderRepository from "../github/GitHubIssueOnboarderRepository.js";
+import CommitRepository from "../commit/CommitRepository.js";
+import { createOnboarder } from "./factories.js";
+import { createCommit } from "../commit/__tests__/factories.js";
 
 describe("MeanTimeToFirstCommitCalculator", () => {
   describe("calculate", () => {

@@ -1,10 +1,11 @@
-const { Octokit } = require("@octokit/rest");
-const { throttling } = require("@octokit/plugin-throttling");
-const GitHubIssueOnboarderRepository = require("./src/github/GitHubIssueOnboarderRepository");
-const RosterMemberRepository = require("./src/roster/RosterMemberRepository");
-const CommitRepository = require("./src/commit/CommitRepository");
-const MeanTimeToFirstCommitCalculator = require("./src/MeanTimeToFirstCommitCalculator");
-const defaultRoster = require("./src/roster/roster.json");
+import { fileURLToPath } from "node:url";
+import { readFile } from "node:fs/promises";
+import { Octokit } from "@octokit/rest";
+import { throttling } from "@octokit/plugin-throttling";
+import GitHubIssueOnboarderRepository from "./src/github/GitHubIssueOnboarderRepository.js";
+import RosterMemberRepository from "./src/roster/RosterMemberRepository.js";
+import CommitRepository from "./src/commit/CommitRepository.js";
+import MeanTimeToFirstCommitCalculator from "./src/MeanTimeToFirstCommitCalculator.js";
 
 const throttledOctokit = () => {
   const ThrottledOctokit = Octokit.plugin(throttling);
@@ -28,7 +29,7 @@ const throttledOctokit = () => {
   });
 };
 
-const main = async (roster = defaultRoster) => {
+export const main = (roster) => {
   const octokit = throttledOctokit();
   const gitHubIssueOnboarderRepository = new GitHubIssueOnboarderRepository(
     octokit,
@@ -36,7 +37,7 @@ const main = async (roster = defaultRoster) => {
   const rosterMemberRepository = new RosterMemberRepository(roster);
   const commitRepository = new CommitRepository(octokit);
 
-  await Promise.all([
+  return Promise.all([
     calculateMeanTimeToFirstCommit(
       "Mean Time to First Commit based on GitHub Onboarding Issues (days)",
       gitHubIssueOnboarderRepository,
@@ -65,8 +66,7 @@ const calculateMeanTimeToFirstCommit = async (
   console.log(`${label}: ${meanTimeToFirstCommit.toFixed(2)}`);
 };
 
-if (require.main === module) {
-  main();
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const roster = JSON.parse(await readFile("./src/roster/roster.json"));
+  await main(roster);
 }
-
-module.exports = main;

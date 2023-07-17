@@ -1,13 +1,13 @@
-const { describe, it } = require("node:test");
-const assert = require("node:assert").strict;
-const GitHubIssueOnboarderRepository = require("../GitHubIssueOnboarderRepository");
-const { createOnboarder } = require("../../__tests__/factories");
-const { createGitHubOnboardingIssueDto } = require("./factories");
-const {
+import { describe, it } from "node:test";
+import { strict as assert } from "node:assert";
+import { Octokit } from "@octokit/rest";
+import GitHubIssueOnboarderRepository from "../GitHubIssueOnboarderRepository.js";
+import { createOnboarder } from "../../__tests__/factories.js";
+import { createGitHubOnboardingIssueDto } from "./factories.js";
+import {
   setupMswServer,
   listIssuesForRepoMswRequestHandler,
-} = require("../../__tests__/helpers");
-const { Octokit } = require("@octokit/rest");
+} from "../../__tests__/helpers.js";
 
 describe("GitHubIssueOnboarderRepository", () => {
   const server = setupMswServer();

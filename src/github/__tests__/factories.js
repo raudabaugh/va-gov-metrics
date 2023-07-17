@@ -1,4 +1,4 @@
-const createGitHubOnboardingIssueDto = (attributes = {}) => ({
+export const createGitHubOnboardingIssueDto = (attributes = {}) => ({
   title: "Platform Orientation Template",
   body: "GitHub handle*: octocat\n",
   created_at: "2023-07-01T00:00:00Z",
@@ -7,7 +7,3 @@ const createGitHubOnboardingIssueDto = (attributes = {}) => ({
   },
   ...attributes,
 });
-
-module.exports = {
-  createGitHubOnboardingIssueDto,
-};

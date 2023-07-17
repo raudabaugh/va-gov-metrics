@@ -1,4 +1,4 @@
-class GitHubHandleExtractor {
+export default class GitHubHandleExtractor {
   NO_MATCH = -1;
 
   extract(body, submitter) {
@@ -37,5 +37,3 @@ class GitHubHandleExtractor {
     return gitHubHandle;
   }
 }
-
-module.exports = GitHubHandleExtractor;

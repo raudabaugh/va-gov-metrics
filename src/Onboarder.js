@@ -1,4 +1,4 @@
-class Onboarder {
+export default class Onboarder {
   constructor({ gitHubHandle, onboardingStart }) {
     this.gitHubHandle = gitHubHandle;
     this.onboardingStart = onboardingStart;
@@ -17,5 +17,3 @@ class Onboarder {
     return firstCommitDiffInDays;
   }
 }
-
-module.exports = Onboarder;

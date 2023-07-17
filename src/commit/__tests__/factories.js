@@ -1,6 +1,6 @@
-const Commit = require("../Commit");
+import Commit from "../Commit.js";
 
-const createCommitDto = (attributes = {}) => ({
+export const createCommitDto = (attributes = {}) => ({
   commit: {
     author: {
       date: "2023-07-04T00:00:00Z",
@@ -9,13 +9,8 @@ const createCommitDto = (attributes = {}) => ({
   ...attributes,
 });
 
-const createCommit = (attributes = {}) =>
+export const createCommit = (attributes = {}) =>
   new Commit({
     date: new Date("2023-07-04T00:00:00Z"),
     ...attributes,
   });
-
-module.exports = {
-  createCommitDto,
-  createCommit,
-};

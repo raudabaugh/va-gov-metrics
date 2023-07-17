@@ -1,4 +1,4 @@
-class MeanTimeToFirstCommitCalculator {
+export default class MeanTimeToFirstCommitCalculator {
   constructor(onboarderRepository, commitRepository) {
     this.onboarderRepository = onboarderRepository;
     this.commitRepository = commitRepository;
@@ -30,5 +30,3 @@ class MeanTimeToFirstCommitCalculator {
     return meanTimeToFirstCommit;
   }
 }
-
-module.exports = MeanTimeToFirstCommitCalculator;

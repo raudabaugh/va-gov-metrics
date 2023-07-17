@@ -1,7 +1,7 @@
-const GitHubHandleExtractor = require("./GitHubHandleExtractor");
-const Onboarder = require("../Onboarder");
+import GitHubHandleExtractor from "./GitHubHandleExtractor.js";
+import Onboarder from "../Onboarder.js";
 
-class GitHubIssueOnboarderRepository {
+export default class GitHubIssueOnboarderRepository {
   constructor(octokit) {
     this.octokit = octokit;
   }
@@ -27,5 +27,3 @@ class GitHubIssueOnboarderRepository {
       });
   }
 }
-
-module.exports = GitHubIssueOnboarderRepository;

@@ -1,6 +1,6 @@
-const Commit = require("./Commit");
+import Commit from "./Commit.js";
 
-class CommitRepository {
+export default class CommitRepository {
   constructor(octokit) {
     this.octokit = octokit;
   }
@@ -22,5 +22,3 @@ class CommitRepository {
       : null;
   }
 }
-
-module.exports = CommitRepository;

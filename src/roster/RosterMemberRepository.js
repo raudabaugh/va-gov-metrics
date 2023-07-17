@@ -1,6 +1,6 @@
-const Onboarder = require("../Onboarder");
+import Onboarder from "../Onboarder.js";
 
-class RosterMemberRepository {
+export default class RosterMemberRepository {
   constructor(roster) {
     this.roster = roster;
   }
@@ -15,5 +15,3 @@ class RosterMemberRepository {
     );
   }
 }
-
-module.exports = RosterMemberRepository;

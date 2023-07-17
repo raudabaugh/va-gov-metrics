@@ -1,13 +1,13 @@
-const { describe, it } = require("node:test");
-const assert = require("node:assert").strict;
-const { Octokit } = require("@octokit/rest");
-const {
+import { describe, it } from "node:test";
+import { strict as assert } from "node:assert";
+import { Octokit } from "@octokit/rest";
+import {
   setupMswServer,
   listCommitsForVetsApiMswRequestHandler,
-} = require("../../__tests__/helpers");
-const CommitRepository = require("../CommitRepository");
-const { createCommitDto, createCommit } = require("./factories");
-const { createOnboarder } = require("../../__tests__/factories");
+} from "../../__tests__/helpers.js";
+import CommitRepository from "../CommitRepository.js";
+import { createCommitDto, createCommit } from "./factories.js";
+import { createOnboarder } from "../../__tests__/factories.js";
 
 describe("CommitRepository", () => {
   const server = setupMswServer();
@@ -40,7 +40,10 @@ describe("CommitRepository", () => {
         onboarder,
       );
 
-      assert.deepEqual(firstCommit, createCommit({ date: new Date(commits[1].commit.author.date) }));
+      assert.deepEqual(
+        firstCommit,
+        createCommit({ date: new Date(commits[1].commit.author.date) }),
+      );
     });
 
     it("returns null when there is no first commit", async () => {

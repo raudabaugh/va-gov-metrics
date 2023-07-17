@@ -1,19 +1,17 @@
-const { describe, it, beforeEach } = require("node:test");
-const { mock } = require("node:test");
-const assert = require("node:assert").strict;
-const main = require("../../index");
-const {
+import { describe, it, beforeEach } from "node:test";
+import { mock } from "node:test";
+import { strict as assert } from "node:assert";
+import { main } from "../../index.js";
+import {
   setupMswServer,
   listIssuesForRepoMswRequestHandler,
   listCommitsForVetsWebsiteMswRequestHandler,
   listCommitsForVetsApiMswRequestHandler,
-} = require("./helpers");
-const { createOnboarder } = require("./factories");
-const {
-  createGitHubOnboardingIssueDto,
-} = require("../github/__tests__/factories");
-const { createCommitDto } = require("../commit/__tests__/factories");
-const { createRosterMemberDto } = require("../roster/__tests__/factories");
+} from "./helpers.js";
+import { createOnboarder } from "./factories.js";
+import { createGitHubOnboardingIssueDto } from "../github/__tests__/factories.js";
+import { createCommitDto } from "../commit/__tests__/factories.js";
+import { createRosterMemberDto } from "../roster/__tests__/factories.js";
 
 describe("happy path", () => {
   const server = setupMswServer();
