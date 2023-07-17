@@ -10,6 +10,7 @@
     "prettier:ci": "prettier . --check",
     "start": "node index.js",
     "test": "node --test",
+    "test:ci": "node --test --experimental-test-coverage",
     "test:watch": "node --test --watch"
   },
   "author": "ssanders@vmware.com",
