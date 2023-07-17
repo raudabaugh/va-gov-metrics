@@ -1,4 +1,5 @@
-const GitHubOnboardingIssue = require("./GitHubOnboardingIssue");
+const GitHubHandleExtractor = require("./GitHubHandleExtractor");
+const Onboarder = require("../Onboarder");
 
 class GitHubIssueOnboarderRepository {
   constructor(octokit) {
@@ -18,7 +19,12 @@ class GitHubIssueOnboarderRepository {
 
     return issues
       .filter(({ title }) => title.includes("Platform Orientation Template"))
-      .map((issue) => new GitHubOnboardingIssue({ issue }).toOnboarder());
+      .map(({ body, user: { login }, created_at }) => {
+        const gitHubHandleExtractor = new GitHubHandleExtractor();
+        const gitHubHandle = gitHubHandleExtractor.extract(body, login);
+        const onboardingStart = new Date(created_at);
+        return new Onboarder({ gitHubHandle, onboardingStart });
+      });
   }
 }
 

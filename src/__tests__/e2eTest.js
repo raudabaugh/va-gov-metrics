@@ -23,16 +23,16 @@ describe("happy path", () => {
 
   describe("using the GitHub onboarding template issue as an onboarder source", () => {
     beforeEach(() => {
-      const onboardingIssueDto = createGitHubOnboardingIssueDto({
+      const gitHubOnboardingIssueDto = createGitHubOnboardingIssueDto({
         body: "GitHub handle*: octocat\n",
         created_at: "2023-07-01T00:00:00Z",
       });
       const onboarder = createOnboarder({
         gitHubHandle: "octocat",
-        onboardingStart: new Date(onboardingIssueDto.created_at),
+        onboardingStart: new Date(gitHubOnboardingIssueDto.created_at),
       });
       server.use(
-        listIssuesForRepoMswRequestHandler([onboardingIssueDto]),
+        listIssuesForRepoMswRequestHandler([gitHubOnboardingIssueDto]),
         listCommitsForVetsWebsiteMswRequestHandler(onboarder, [
           createCommitDto({
             commit: {
