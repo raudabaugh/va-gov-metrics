@@ -7,6 +7,7 @@ import RosterMemberRepository from "./src/roster/RosterMemberRepository.js";
 import CommitRepository from "./src/commit/CommitRepository.js";
 import MeanTimeToFirstCommitCalculator from "./src/MeanTimeToFirstCommitCalculator.js";
 
+/* node:coverage disable */
 const throttledOctokit = () => {
   const ThrottledOctokit = Octokit.plugin(throttling);
 
@@ -28,6 +29,7 @@ const throttledOctokit = () => {
     },
   });
 };
+/* node:coverage enable */
 
 export const main = (roster) => {
   const octokit = throttledOctokit();
@@ -66,7 +68,9 @@ const calculateMeanTimeToFirstCommit = async (
   console.log(`${label}: ${meanTimeToFirstCommit.toFixed(2)}`);
 };
 
+/* node:coverage disable */
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const roster = JSON.parse(await readFile("./src/roster/roster.json"));
   await main(roster);
 }
+/* node:coverage enable */

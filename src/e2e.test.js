@@ -7,11 +7,11 @@ import {
   listIssuesForVaGovTeam,
   listCommitsForVetsWebsite,
   listCommitsForVetsApi,
-} from "./test-msw-helpers.js";
-import { createOnboarder } from "./test-factories.js";
-import { createGitHubOnboardingIssueDto } from "./github/test-factories.js";
-import { createCommitDto } from "./commit/test-factories.js";
-import { createRosterMemberDto } from "./roster/test-factories.js";
+} from "./msw-helpers.js";
+import { createOnboarder } from "./factories.js";
+import { createGitHubOnboardingIssueDto } from "./github/factories.js";
+import { createCommitDto } from "./commit/factories.js";
+import { createRosterMemberDto } from "./roster/factories.js";
 
 describe("happy path", () => {
   const server = setupMswServer();

@@ -1,3 +1,5 @@
+/* node:coverage disable */
+
 export const createGitHubOnboardingIssueDto = (attributes = {}) => ({
   title: "Platform Orientation Template",
   body: "GitHub handle*: octocat\n",
@@ -7,3 +9,5 @@ export const createGitHubOnboardingIssueDto = (attributes = {}) => ({
   },
   ...attributes,
 });
+
+/* node:coverage enable */

@@ -1,3 +1,5 @@
+/* node:coverage disable */
+
 import { before, afterEach, after } from "node:test";
 import { setupServer } from "msw/node";
 import { rest } from "msw";
@@ -52,3 +54,5 @@ const vaGitHubListCommitsApiMswRequestHandler = (
 
 const vaGitHubApiUrl = (path) =>
   `https://api.github.com/repos/department-of-veterans-affairs${path}`;
+
+/* node:coverage enable */

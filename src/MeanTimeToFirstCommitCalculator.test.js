@@ -3,8 +3,8 @@ import { strict as assert } from "node:assert";
 import MeanTimeToFirstCommitCalculator from "./MeanTimeToFirstCommitCalculator.js";
 import GitHubIssueOnboarderRepository from "./github/GitHubIssueOnboarderRepository.js";
 import CommitRepository from "./commit/CommitRepository.js";
-import { createOnboarder } from "./test-factories.js";
-import { createCommit } from "./commit/test-factories.js";
+import { createOnboarder } from "./factories.js";
+import { createCommit } from "./commit/factories.js";
 
 describe("MeanTimeToFirstCommitCalculator", () => {
   describe("calculate", () => {

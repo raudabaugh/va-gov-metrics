@@ -2,9 +2,9 @@ import { describe, it } from "node:test";
 import { strict as assert } from "node:assert";
 import { Octokit } from "@octokit/rest";
 import GitHubIssueOnboarderRepository from "./GitHubIssueOnboarderRepository.js";
-import { createOnboarder } from "../test-factories.js";
-import { createGitHubOnboardingIssueDto } from "./test-factories.js";
-import { setupMswServer, listIssuesForVaGovTeam } from "../test-msw-helpers.js";
+import { createOnboarder } from "../factories.js";
+import { createGitHubOnboardingIssueDto } from "./factories.js";
+import { setupMswServer, listIssuesForVaGovTeam } from "../msw-helpers.js";
 
 describe("GitHubIssueOnboarderRepository", () => {
   const server = setupMswServer();

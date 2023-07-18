@@ -1,10 +1,10 @@
 import { describe, it } from "node:test";
 import { strict as assert } from "node:assert";
 import { Octokit } from "@octokit/rest";
-import { setupMswServer, listCommitsForVetsApi } from "../test-msw-helpers.js";
+import { setupMswServer, listCommitsForVetsApi } from "../msw-helpers.js";
 import CommitRepository from "./CommitRepository.js";
-import { createCommitDto, createCommit } from "./test-factories.js";
-import { createOnboarder } from "../test-factories.js";
+import { createCommitDto, createCommit } from "./factories.js";
+import { createOnboarder } from "../factories.js";
 
 describe("CommitRepository", () => {
   const server = setupMswServer();
@@ -34,12 +34,12 @@ describe("CommitRepository", () => {
 
       const firstCommit = await commitRepository.findFirstBy(
         "vets-api",
-        onboarder,
+        onboarder
       );
 
       assert.deepEqual(
         firstCommit,
-        createCommit({ date: new Date(commits[1].commit.author.date) }),
+        createCommit({ date: new Date(commits[1].commit.author.date) })
       );
     });
 
@@ -49,7 +49,7 @@ describe("CommitRepository", () => {
 
       const firstCommit = await commitRepository.findFirstBy(
         "vets-api",
-        onboarder,
+        onboarder
       );
 
       assert.equal(firstCommit, null);

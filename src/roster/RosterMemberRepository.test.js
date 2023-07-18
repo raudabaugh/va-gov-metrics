@@ -1,8 +1,8 @@
 import { describe, it } from "node:test";
 import { strict as assert } from "node:assert";
 import RosterMemberRepository from "./RosterMemberRepository.js";
-import { createOnboarder } from "../test-factories.js";
-import { createRosterMemberDto } from "./test-factories.js";
+import { createOnboarder } from "../factories.js";
+import { createRosterMemberDto } from "./factories.js";
 
 describe("RosterMemberRepository", () => {
   describe("findAll", () => {
