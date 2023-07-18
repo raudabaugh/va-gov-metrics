@@ -10,12 +10,12 @@ export default class MeanTimeToFirstCommitCalculator {
       onboarders.map(async (onboarder) => {
         const possibleCommits = await Promise.all(
           ["vets-website", "vets-api"].map((repo) =>
-            this.commitRepository.findFirstBy(repo, onboarder),
-          ),
+            this.commitRepository.findFirstBy(repo, onboarder)
+          )
         );
         const commits = possibleCommits.filter((commit) => commit);
         return onboarder.daysToFirstCommit(commits);
-      }),
+      })
     );
 
     const daysToFirstCommit = possibleDaysToFirstCommit.filter((days) => days);
