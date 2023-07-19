@@ -14,7 +14,7 @@ export default class GitHubIssueOnboarderRepository {
         repo: "va.gov-team",
         labels: "platform-orientation",
         state: "all",
-      }
+      },
     );
 
     return issues

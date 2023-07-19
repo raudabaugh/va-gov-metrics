@@ -34,12 +34,12 @@ describe("CommitRepository", () => {
 
       const firstCommit = await commitRepository.findFirstBy(
         "vets-api",
-        onboarder
+        onboarder,
       );
 
       assert.deepEqual(
         firstCommit,
-        createCommit({ date: new Date(commits[1].commit.author.date) })
+        createCommit({ date: new Date(commits[1].commit.author.date) }),
       );
     });
 
@@ -49,7 +49,7 @@ describe("CommitRepository", () => {
 
       const firstCommit = await commitRepository.findFirstBy(
         "vets-api",
-        onboarder
+        onboarder,
       );
 
       assert.equal(firstCommit, null);

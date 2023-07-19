@@ -21,9 +21,9 @@ export const listIssuesForVaGovTeam = (json) =>
         req.url.searchParams.get("labels") === "platform-orientation" &&
           req.url.searchParams.get("state") === "all"
           ? json
-          : []
-      )
-    )
+          : [],
+      ),
+    ),
   );
 
 export const listCommitsForVetsWebsite = (onboarder, json) =>
@@ -39,9 +39,9 @@ const vaGitHubListCommits = (path, { gitHubHandle, onboardingStart }, json) =>
         req.url.searchParams.get("author") === gitHubHandle &&
           req.url.searchParams.get("since") === onboardingStart.toString()
           ? json
-          : []
-      )
-    )
+          : [],
+      ),
+    ),
   );
 
 const vaGitHubUrl = (path) =>
