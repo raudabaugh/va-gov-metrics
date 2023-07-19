@@ -49,13 +49,13 @@ describe("happy path", () => {
     });
 
     it("logs the mean time to first commit", async () => {
-      const consoleLogMock = mock.method(console, "log");
+      mock.method(console, "log");
       const roster = [];
 
       await main(roster);
 
       assert.ok(
-        consoleLogMock.mock.calls.some((call) =>
+        console.log.mock.calls.some((call) =>
           call.arguments.includes(
             "Mean Time to First Commit based on GitHub Onboarding Issues (days): 3.00",
           ),
@@ -93,12 +93,12 @@ describe("happy path", () => {
     });
 
     it("logs the mean time to first commit", async () => {
-      const consoleLogMock = mock.method(console, "log");
+      mock.method(console, "log");
 
       await main(roster);
 
       assert.ok(
-        consoleLogMock.mock.calls.some((call) =>
+        console.log.mock.calls.some((call) =>
           call.arguments.includes(
             "Mean Time to First Commit based on Roster (days): 13.00",
           ),

@@ -12,7 +12,7 @@ describe("CommitRepository", () => {
   describe("findFirstBy", () => {
     const commitRepository = new CommitRepository(new Octokit());
 
-    it("returns the first commit for an oboarder in a repo", async () => {
+    it("returns the first commit for an onboarder in a repo", async () => {
       const onboarder = createOnboarder();
       const commits = [
         createCommitDto({

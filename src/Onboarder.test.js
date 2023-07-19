@@ -8,10 +8,13 @@ describe("Onboarder", () => {
     it("returns the first time to commit in days", () => {
       const possibleFirstCommits = [
         createCommit({
-          date: new Date("2023-07-04T00:00:00Z"),
+          date: new Date("2023-07-05T00:00:00Z"),
         }),
         createCommit({
-          date: new Date("2023-07-05T00:00:00Z"),
+          date: new Date("2023-07-06T00:00:00Z"),
+        }),
+        createCommit({
+          date: new Date("2023-07-04T00:00:00Z"),
         }),
       ];
       const onboarder = createOnboarder({
