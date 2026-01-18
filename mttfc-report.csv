@@ -388,3 +388,9 @@ Mean Time to First Commit based on Roster (days) (vets-api only),167.96,Sun Jan 
 Mean Time to First Commit based on GitHub Onboarding Issues (days),63.87,Sun Jan 11 00:01:04 UTC 2026
 Mean Time to First Commit based on GitHub Onboarding Issues (days) (vets-website only),68.78,Sun Jan 11 00:01:04 UTC 2026
 Mean Time to First Commit based on GitHub Onboarding Issues (days) (vets-api only),55.75,Sun Jan 11 00:01:04 UTC 2026
+Mean Time to First Commit based on Roster (days),169.99,Sun Jan 18 00:01:00 UTC 2026
+Mean Time to First Commit based on Roster (days) (vets-website only),163.95,Sun Jan 18 00:01:00 UTC 2026
+Mean Time to First Commit based on Roster (days) (vets-api only),179.27,Sun Jan 18 00:01:00 UTC 2026
+Mean Time to First Commit based on GitHub Onboarding Issues (days),63.87,Sun Jan 18 00:01:00 UTC 2026
+Mean Time to First Commit based on GitHub Onboarding Issues (days) (vets-website only),68.78,Sun Jan 18 00:01:00 UTC 2026
+Mean Time to First Commit based on GitHub Onboarding Issues (days) (vets-api only),55.75,Sun Jan 18 00:01:00 UTC 2026
